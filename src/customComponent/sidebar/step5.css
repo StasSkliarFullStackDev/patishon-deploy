@@ -1,0 +1,33 @@
+.panels-list li {
+  display: list-item;
+}
+
+.panels-list__item {
+  margin-bottom: 15px;
+  display: flex;
+  align-items: center;
+}
+
+.panels-list__item:last-child {
+  margin-bottom: 0;
+}
+
+.panels-list__label {
+  margin-right: 10px;
+  color: #ffffff;
+}
+
+.panels-list__btn {
+  padding: 0 10px;
+  height: 30px;
+  background: #ffffff;
+  box-shadow: 0 0 4px #ffffff;
+  border-radius: 10px;
+  font-size: 14px;
+  line-height: 30px;
+  border: 0;
+  color: var(--buttonColor);
+  cursor: pointer;
+  font-weight: 800;
+  margin-left: 10px;
+}
