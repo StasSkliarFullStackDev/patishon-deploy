@@ -20,7 +20,7 @@ const AppRoutes = (props) => {
         <Routes>
           <Route path="/" element={<Navigate to="/landing" />} />
           <Route
-            path="/patishon-deploy/landing"
+            path="/landing"
             element={
               <Landing />
             }
