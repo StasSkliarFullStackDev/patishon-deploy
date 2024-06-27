@@ -1,7 +1,7 @@
 {
   "files": {
     "main.css": "/patishon-deploy/static/css/main.714d9744.css",
-    "main.js": "/patishon-deploy/static/js/main.0846b4a5.js",
+    "main.js": "/patishon-deploy/static/js/main.bc99101b.js",
     "static/js/787.4095ae72.chunk.js": "/patishon-deploy/static/js/787.4095ae72.chunk.js",
     "static/media/view.jpg": "/patishon-deploy/static/media/view.4cde0d1f0adbe8cc2583.jpg",
     "static/media/bg_sofa.png": "/patishon-deploy/static/media/bg_sofa.6d3a3023d58f71bdee15.png",
@@ -52,11 +52,11 @@
     "static/media/Satoshi-Light.woff2": "/patishon-deploy/static/media/Satoshi-Light.df8f06167ee6fd05a131.woff2",
     "index.html": "/patishon-deploy/index.html",
     "main.714d9744.css.map": "/patishon-deploy/static/css/main.714d9744.css.map",
-    "main.0846b4a5.js.map": "/patishon-deploy/static/js/main.0846b4a5.js.map",
+    "main.bc99101b.js.map": "/patishon-deploy/static/js/main.bc99101b.js.map",
     "787.4095ae72.chunk.js.map": "/patishon-deploy/static/js/787.4095ae72.chunk.js.map"
   },
   "entrypoints": [
     "static/css/main.714d9744.css",
-    "static/js/main.0846b4a5.js"
+    "static/js/main.bc99101b.js"
   ]
 }
