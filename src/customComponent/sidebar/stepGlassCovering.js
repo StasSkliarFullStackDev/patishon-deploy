@@ -47,8 +47,8 @@ const GlassCovering = (props) => {
                     <div className='btn_radio'><Radio value={'3'}/></div>
                 </div>
             </Radio.Group>
-
-            <div className='glass-covering__next-btn-container'>
+            
+            <div className="floating_next_btn">
                 <button
                     onClick={() => {
                         handleChangeState(undefined, 3);

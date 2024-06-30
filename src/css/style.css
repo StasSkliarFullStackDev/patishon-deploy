@@ -2424,12 +2424,6 @@ span.ant-modal-confirm-title {
   max-height: 600px;
 }
 
-.glass-covering__next-btn-container {
-  display: flex;
-  justify-content: center;
-  margin: 25px 0;
-}
-
 h3.glass-covering__title {
   font-size: 24px;
 }

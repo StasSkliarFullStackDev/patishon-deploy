@@ -56,6 +56,10 @@ const Step1 = (props) => {
   const { partitionType, connectWith, minimumWallLength } = configuration2D;
 
   React.useEffect(() => {
+    dispatch(updateConfigurationStates(2000, "roomHeight"));
+  }, [])
+
+  React.useEffect(() => {
     if (isMakeDefaultRoom) {
       let verticalWalls = [];
       let horizontalWalls = [];
@@ -582,7 +586,7 @@ const Step1 = (props) => {
         </p>
       </div>
       <div className="floating_next_btn">
-      <button
+        <button
           type="submit"
           onClick={() => {
             handleChangeState(undefined, 2);
