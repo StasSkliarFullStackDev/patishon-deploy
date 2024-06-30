@@ -2433,3 +2433,24 @@ span.ant-modal-confirm-title {
 h3.glass-covering__title {
   font-size: 24px;
 }
+
+,doors-size-radio-list-title {
+   margin-bottom: 10px;
+ }
+
+.doors-size-radio-list {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-bottom: 10px;
+}
+
+.doors-size-radio-list .radio_line {
+  flex-direction: row-reverse;
+  justify-content: flex-end;
+  width: auto;
+}
+
+.mb-10px {
+  margin-bottom: 10px !important;
+}

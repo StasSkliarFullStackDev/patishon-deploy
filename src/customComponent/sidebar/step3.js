@@ -217,95 +217,114 @@ const Step3 = (props) => {
   }, [skipThirdStep])
 
   return (
-    <div className='step4 custom_height'>
-      <div className='dimensions-data'>
-        <h3>Doors</h3>
-      </div>
-      <div>
-        <h4 className="single door_p door_point">Door Type</h4>
-        <div className="good">
-          <Radio.Group onChange={handleChangedoorChannelTab} value={doorChannelTabSelected}>
-            <div className="radio_line">
-              <div className='custom_width'>Hinged</div>
-              <div className='btn_radio'><Radio defaultChecked value={'1'} /></div>
-            </div>
-            <div className="radio_line">
-              <div className='custom_width'>Sliding</div>
-              <div className='btn_radio'><Radio value={'2'} /></div>
-            </div>
-          </Radio.Group>
+      <div className='step4 custom_height'>
+        <div className='dimensions-data'>
+          <h3>Doors</h3>
         </div>
-      </div>
-      {doorChannelTabSelected == 1 ?
-          <>
-            <div className="category-details bg_home">
-              <h3>Door Direction</h3>
-              <div className="good">
-                <Radio.Group onChange={handleChangeCategory} value={frameType.category}>
-                  <div className="radio_line">
-                    <div className='custom_width'>Push</div>
-                    <div className='btn_radio'><Radio defaultChecked disabled={!doorHinges[0]?.isEnabled} value="push"/>
-                    </div>
-                  </div>
-                  <div className="radio_line">
-                    <div className='custom_width'>Pull</div>
-                    <div className='btn_radio'><Radio disabled={!doorHinges[1]?.isEnabled} value="pull"/></div>
-                  </div>
-                </Radio.Group>
+        <div>
+          <h4 className="single door_p door_point">Door Type</h4>
+          <div className="good">
+            <Radio.Group onChange={handleChangedoorChannelTab} value={doorChannelTabSelected}>
+              <div className="radio_line">
+                <div className='custom_width'>Hinged</div>
+                <div className='btn_radio'><Radio defaultChecked value={'1'}/></div>
               </div>
-              {doorChannelTabSelected == 1 ?
-                  <>
-                    <h3>Hinged on the</h3>
-                    <div className="good">
-                      <Radio.Group onChange={handleChangeDirection} value={frameType.direction}>
-                        {selectedCategoryHinges.doorHinges?.map((obj, index) => {
-                          return (<div className="radio_line">
-                            <div className='custom_width'>{firstLetterUpperCase(obj.type)}</div>
-                            <div className='btn_radio'><Radio disabled={!obj.isActivated} value={obj.type}/></div>
-                          </div>);
-                        })}
-                      </Radio.Group>
-                    </div>
-                  </> :
-                  null}
-            </div>
-          </> : null
-      }
-      <h4 className="single door_p door_point">Door Style</h4>
-      <div className="panelsizes sizes space-line door_point ">
-        <div className={doorGlass === 1 ? 'wrapper_frames' : 'wrapper_frames active'}>
-          <div className="first_div" onClick={() => {
-            handleMetalGlazing(0)
-          }}></div>
-          <p>Frameless</p>
-        </div>
-        <div className={doorGlass === 0 ? 'wrapper_frames' : 'wrapper_frames active'}>
-          <img src={ThemeImages.frames2} className='jack_imgd' onClick={() => {
-            handleMetalGlazing(1)
-          }}/>
-          <p>Framed</p>
-        </div>
-      </div>
-      {doorGlass === 1 && <div className="toggle_slider">
-        <div className='first-silder'>
-          <h3>Number of Horizontal Bars</h3>
-          <Slider
-              className="slider slider_step4"
-              defaultValue={6}
-              tipFormatter={formatter}
-              onChange={handleOnChange}
-              min={1}
-              max={(Math.ceil(roomHeight / 500) - 1)}
-              value={typeof numbersOfBars === "number" ? numbersOfBars : 0}
-          />
-          <div className='data_line_one'>
-            <label>1</label>
-            <label>{(Math.ceil(roomHeight / 500) - 1)}</label>
+              <div className="radio_line">
+                <div className='custom_width'>Sliding</div>
+                <div className='btn_radio'><Radio value={'2'}/></div>
+              </div>
+            </Radio.Group>
           </div>
         </div>
-        <p className="maximum"> Maximum 1 horizontal bar is allowed per 500 mm and minimum 1 full length.</p>
-      </div>}
-      {/* <div className='button top_new'>
+        {doorChannelTabSelected == 1 ?
+            <>
+              <div className="category-details bg_home">
+                <h3>Door Direction</h3>
+                <div className="good">
+                  <Radio.Group onChange={handleChangeCategory} value={frameType.category}>
+                    <div className="radio_line">
+                      <div className='custom_width'>Push</div>
+                      <div className='btn_radio'><Radio defaultChecked disabled={!doorHinges[0]?.isEnabled}
+                                                        value="push"/>
+                      </div>
+                    </div>
+                    <div className="radio_line">
+                      <div className='custom_width'>Pull</div>
+                      <div className='btn_radio'><Radio disabled={!doorHinges[1]?.isEnabled} value="pull"/></div>
+                    </div>
+                  </Radio.Group>
+                </div>
+                {doorChannelTabSelected == 1 ?
+                    <>
+                      <h3>Hinged on the</h3>
+                      <div className="good">
+                        <Radio.Group onChange={handleChangeDirection} value={frameType.direction}>
+                          {selectedCategoryHinges.doorHinges?.map((obj, index) => {
+                            return (<div className="radio_line">
+                              <div className='custom_width'>{firstLetterUpperCase(obj.type)}</div>
+                              <div className='btn_radio'><Radio disabled={!obj.isActivated} value={obj.type}/></div>
+                            </div>);
+                          })}
+                        </Radio.Group>
+                      </div>
+                    </> :
+                    null}
+              </div>
+            </> : null
+        }
+        <h4 className="single door_p door_point">Door Style</h4>
+        <div className="panelsizes sizes space-line door_point ">
+          <div className={doorGlass === 1 ? 'wrapper_frames' : 'wrapper_frames active'}>
+            <div className="first_div" onClick={() => {
+              handleMetalGlazing(0)
+            }}></div>
+            <p>Frameless</p>
+          </div>
+          <div className={doorGlass === 0 ? 'wrapper_frames' : 'wrapper_frames active'}>
+            <img src={ThemeImages.frames2} className='jack_imgd' onClick={() => {
+              handleMetalGlazing(1)
+            }}/>
+            <p>Framed</p>
+          </div>
+        </div>
+        <h4 className="single size mb-10px">{`Sizes Of ${doorChannelTabSelected == 1 ? "Single" : "Double"} Door`}</h4>
+        <Radio.Group>
+          {doorChannels.map((item, index) => {
+            return <div className="doors-size-radio-list" key={index}>
+              {item.doorSize?.map((eachDoorSize, indexOfDoorSize) => {
+                getPrice(eachDoorSize)
+                return (
+                    <div key={indexOfDoorSize} className='radio_line'>
+                      <div className="radio-item">
+                        <span className='radio-item__label'>{eachDoorSize.size} mm</span>
+                      </div>
+                      <div className='btn_radio'><Radio defaultChecked value={eachDoorSize.size}/></div>
+                    </div>
+                )
+              })}
+            </div>
+          })}
+        </Radio.Group>
+        {doorGlass === 1 && <div className="toggle_slider">
+          <div className='first-silder'>
+            <h3>Number of Horizontal Bars</h3>
+            <Slider
+                className="slider slider_step4"
+                defaultValue={6}
+                tipFormatter={formatter}
+                onChange={handleOnChange}
+                min={1}
+                max={(Math.ceil(roomHeight / 500) - 1)}
+                value={typeof numbersOfBars === "number" ? numbersOfBars : 0}
+            />
+            <div className='data_line_one'>
+              <label>1</label>
+              <label>{(Math.ceil(roomHeight / 500) - 1)}</label>
+            </div>
+          </div>
+          <p className="maximum"> Maximum 1 horizontal bar is allowed per 500 mm and minimum 1 full length.</p>
+        </div>}
+        {/* <div className='button top_new'>
         <button type='submit'
           onClick={() => {
             if (hingeLoader) {
@@ -322,18 +341,22 @@ const Step3 = (props) => {
           }}
           className='update-floorplan sucess_button'>Apply</button>
       </div> */}
-      <div className='button top_new'>
-        <button type='submit'
-          onClick={() => {
-            handleApply()
-            let paritionWall = blueprint3d[0].floorplanner.floorplan.walls[4]
-            let doorStart = { x: ((paritionWall.start.x + paritionWall.end.x) / 2) - (((blueprint3d[0]?.globals?.getGlobal("selectedDoorConfiguration")?.selectedDoorSize || 0) / perCmEqualToMm) / 2), y: paritionWall.start.y }
-            blueprint3d[0]?.globals?.setGlobal("doorStartVector", doorStart)
-            handleApply()
-          }}
-          className='update-floorplan sucess_button'>Center</button>
-      </div>
-      {/* <div className="target-data-button-i">
+        <div className='button top_new'>
+          <button type='submit'
+                  onClick={() => {
+                    handleApply()
+                    let paritionWall = blueprint3d[0].floorplanner.floorplan.walls[4]
+                    let doorStart = {
+                      x: ((paritionWall.start.x + paritionWall.end.x) / 2) - (((blueprint3d[0]?.globals?.getGlobal("selectedDoorConfiguration")?.selectedDoorSize || 0) / perCmEqualToMm) / 2),
+                      y: paritionWall.start.y
+                    }
+                    blueprint3d[0]?.globals?.setGlobal("doorStartVector", doorStart)
+                    handleApply()
+                  }}
+                  className='update-floorplan sucess_button'>Center
+          </button>
+        </div>
+        {/* <div className="target-data-button-i">
         <div className='button'>
           <button type='submit' onClick={onSkip} className='sucess_button'>Skip</button>
         </div>
@@ -356,98 +379,36 @@ const Step3 = (props) => {
 
         </div>
       </div> */}
-      {/* <p className="previous">Previous Price = £{(Math.floor(partitionWallLength * perCmEqualToMm) * panelPricePerMm)} + Door(channel and glass)Price £{glassPrice}</p>
+        {/* <p className="previous">Previous Price = £{(Math.floor(partitionWallLength * perCmEqualToMm) * panelPricePerMm)} + Door(channel and glass)Price £{glassPrice}</p>
       <div className="floating-text">
         <p>total<br></br> price</p>
         <h3>{`£${totalPrice}`}</h3> */}
-      {/* </div> */}
-      <div className="floating_next_btn target-data-button-i">
-      <div className='button'>
-          <button type='submit' onClick={onSkip} className='sucess_button'>Skip</button>
-        </div>
-        <div className='button'>
-          <button type='submit' onClick={() => {
-            if (isObjEmpty(blueprint3d[0]?.globals?.getGlobal("selectedDoorConfiguration"))) {
-              blueprint3d[0]?.globals?.setGlobal("activePanelIndex", -1)
-              let leftLength = partitionLeftWallLength
-              dispatch(updateEngineStatesAction(Math.ceil(leftLength * perCmEqualToMm / 600), 'numberOfPanels'))
-              dispatch(updateEngineStatesAction(Math.ceil(partitionRightWallLength * perCmEqualToMm / 600), 'numberOfPanelsRight'))
-              blueprint3d[0]?.globals?.getCurrentPrice()
-              handleChangeState(undefined, 5)
-            } else {
-              let leftLength = partitionLeftWallLength
-              dispatch(updateEngineStatesAction(Math.ceil(parseInt(leftLength * perCmEqualToMm) / 600), 'numberOfPanels'))
-              dispatch(updateEngineStatesAction(Math.ceil(partitionRightWallLength * perCmEqualToMm / 600), 'numberOfPanelsRight'))
-              handleChangeState(undefined, 4)
-            }
-          }} className='sucess_button'>Next</button>
+        {/* </div> */}
+        <div className="floating_next_btn target-data-button-i">
+          <div className='button'>
+            <button type='submit' onClick={onSkip} className='sucess_button'>Skip</button>
+          </div>
+          <div className='button'>
+            <button type='submit' onClick={() => {
+              if (isObjEmpty(blueprint3d[0]?.globals?.getGlobal("selectedDoorConfiguration"))) {
+                blueprint3d[0]?.globals?.setGlobal("activePanelIndex", -1)
+                let leftLength = partitionLeftWallLength
+                dispatch(updateEngineStatesAction(Math.ceil(leftLength * perCmEqualToMm / 600), 'numberOfPanels'))
+                dispatch(updateEngineStatesAction(Math.ceil(partitionRightWallLength * perCmEqualToMm / 600), 'numberOfPanelsRight'))
+                blueprint3d[0]?.globals?.getCurrentPrice()
+                handleChangeState(undefined, 5)
+              } else {
+                let leftLength = partitionLeftWallLength
+                dispatch(updateEngineStatesAction(Math.ceil(parseInt(leftLength * perCmEqualToMm) / 600), 'numberOfPanels'))
+                dispatch(updateEngineStatesAction(Math.ceil(partitionRightWallLength * perCmEqualToMm / 600), 'numberOfPanelsRight'))
+                handleChangeState(undefined, 4)
+              }
+            }} className='sucess_button'>Next
+            </button>
 
+          </div>
         </div>
       </div>
-    </div>
   )
 }
 export default Step3
-
-/**
- *      <Tabs defaultActiveKey={selectedDoorSize > 920 ? "2" : "1"} onChange={(e) => {
-        dispatch(updateEngineStatesAction(e, "doorChannelTabSelected"))
-      }}>
-        {doorChannels.map((item, index) => {
-          return <TabPane tab={firstLetterUpperCase(item.type)} disabled={!item.isEnabled} key={index + 1}>
-            <div>
-              <h4 id={"sizes_" + (index + 1)} className="single size">{`Sizes Of ${doorChannelTabSelected == 1 ? "Single" : "Double"} Door`}</h4>
-              {errorMsg && <h5 className="single" style={{ color: 'red' }}>* Please select door size.</h5>}
-              <div className="panelsizes grid4 space-line">
-                {item.doorSize?.map((eachDoorSize, indexOfDoorSize) => {
-                  getPrice(eachDoorSize)
-                  return (
-                    <div className={`wrapper_frames ${eachDoorSize.size == selectedDoorSize ? 'active' : ''} ${!eachDoorSize.isActivated && "block"}`} key={indexOfDoorSize}>
-                      <div className="first_div" onClick={() => handeDoorType(eachDoorSize)} ></div>
-                      <p>{eachDoorSize.size} mm</p>
-                    </div>
-                  )
-                })}
-              </div>
-              <div className="category-details bg_home">
-                <h3>Door Direction</h3>
-                <div className="good">
-                  <Radio.Group onChange={handleChangeCategory} value={frameType.category}>
-                    <div className="radio_line">
-                      <div className='custom_width'>Push</div>
-                      <div className='btn_radio'><Radio defaultChecked disabled={!doorHinges[0]?.isEnabled} value="push" /></div>
-                    </div>
-                    <div className="radio_line">
-                      <div className='custom_width'>Pull</div>
-                      <div className='btn_radio'><Radio disabled={!doorHinges[1]?.isEnabled} value="pull" /></div>
-                    </div>
-                  </Radio.Group>
-                </div>
-                {doorChannelTabSelected == 1 ?
-                  <><h3>Hinged on the</h3><div className="good">
-                    <Radio.Group onChange={handleChangeDirection} value={frameType.direction}>
-                      {selectedCategoryHinges.doorHinges?.map((obj, index) => {
-                        return (<div className="radio_line">
-                          <div className='custom_width'>{firstLetterUpperCase(obj.type)}</div>
-                          <div className='btn_radio'><Radio disabled={!obj.isActivated} value={obj.type} /></div>
-                        </div>);
-                      })}
-                    </Radio.Group>
-                  </div></> : null}
-              </div>
-              <h4 className="single door_p door_point">Door Style</h4>
-              <div className="panelsizes sizes space-line door_point ">
-                <div className={doorGlass === 1 ? 'wrapper_frames' : 'wrapper_frames active'}>
-                  <div className="first_div" onClick={() => { handleMetalGlazing(0) }} ></div>
-                  <p>Frameless</p>
-                </div>
-                <div className={doorGlass === 0 ? 'wrapper_frames' : 'wrapper_frames active'}>
-                  <img src={ThemeImages.frames2} className='jack_imgd' onClick={() => { handleMetalGlazing(1) }} />
-                  <p>Framed</p>
-                </div>
-              </div>
-            </div>
-          </TabPane>
-        })}
-      </Tabs>
- */

@@ -17,6 +17,14 @@ const GlassCovering = (props) => {
             <Radio.Group className='column-container'>
                 <div className='radio_line'>
                     <div className='radio-item--with-img'>
+                        <span className='radio-item__label'>Clear</span>
+                        <img src='static/images/etched.png'/>
+                    </div>
+                    <div className='btn_radio'><Radio defaultChecked value={'0'}/></div>
+                </div>
+
+                <div className='radio_line'>
+                    <div className='radio-item--with-img'>
                         <span className='radio-item__label'>Etched</span>
                         <img src='static/images/etched.png'/>
                     </div>

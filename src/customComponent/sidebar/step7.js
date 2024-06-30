@@ -55,33 +55,33 @@ const Step7 = (props) => {
 
   return (
     <div className='step4'>
-      <div className='dimensions-data varients'>
-        <h3>Films</h3>
-        <div className={`wrapper-frames-talent talent_data_point steps7 ${(filterArr.length > 0 && filterArr.length < 4) && 'grid_view' + filterArr.length}`}>
-          {filterArr.length > 0 && filterArr.map((item, index) => {
-            if (item?.isActivated) {
-              return (
-                <div className={`wrapper_frames ${filmsVariant == (item.name) && 'active'}`} >
-                  <div className="second_div_step7 data_second_t"
-                    style={{ backgroundColor: `${item.name}` }}
-                    onClick={() => {
-                      filmPrice = item.price
-                      setFilmsVariant(item.name)
-                      blueprint3d[0]?.globals?.setGlobal("selectedFilm", item.name)
-                      reducerBluePrint?.BP3DData.model.floorplan.update()
-                    }}
-                  >
-                    <img style={{ height: '100%' }} src={LOCAL_SERVER + item.image} className={`wrapper_frames ${filmsVariant == (item.name) && 'active'}`} alt="film" />
-                  </div>
-                  <p>{item.name}</p>
-                </div>
-              )
-            }
-          })
+      {/*<div className='dimensions-data varients'>*/}
+      {/*  <h3>Films</h3>*/}
+      {/*  <div className={`wrapper-frames-talent talent_data_point steps7 ${(filterArr.length > 0 && filterArr.length < 4) && 'grid_view' + filterArr.length}`}>*/}
+      {/*    {filterArr.length > 0 && filterArr.map((item, index) => {*/}
+      {/*      if (item?.isActivated) {*/}
+      {/*        return (*/}
+      {/*          <div className={`wrapper_frames ${filmsVariant == (item.name) && 'active'}`} >*/}
+      {/*            <div className="second_div_step7 data_second_t"*/}
+      {/*              style={{ backgroundColor: `${item.name}` }}*/}
+      {/*              onClick={() => {*/}
+      {/*                filmPrice = item.price*/}
+      {/*                setFilmsVariant(item.name)*/}
+      {/*                blueprint3d[0]?.globals?.setGlobal("selectedFilm", item.name)*/}
+      {/*                reducerBluePrint?.BP3DData.model.floorplan.update()*/}
+      {/*              }}*/}
+      {/*            >*/}
+      {/*              <img style={{ height: '100%' }} src={LOCAL_SERVER + item.image} className={`wrapper_frames ${filmsVariant == (item.name) && 'active'}`} alt="film" />*/}
+      {/*            </div>*/}
+      {/*            <p>{item.name}</p>*/}
+      {/*          </div>*/}
+      {/*        )*/}
+      {/*      }*/}
+      {/*    })*/}
 
-          }
-        </div>
-      </div>
+      {/*    }*/}
+      {/*  </div>*/}
+      {/*</div>*/}
       <h3 className="panel_price mt-45">Looking great! Preview your finished Pātishon, then you can checkout.</h3>
       <div className="target-data-button-i">
         <div className='button'>

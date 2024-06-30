@@ -137,47 +137,11 @@ const Step5 = (props) => {
         <div className='dimensions-data'>
           <div class="label_container_For_customization custom_centered_aligned">
             <h3>Panels</h3>
+            <h3>(In progress)</h3>
           </div>
         </div>
         <div className="first-silder">
-          {/*<h3>Number of panels</h3>*/}
-          {/*<Select*/}
-          {/*    style={{*/}
-          {/*      width: "100%",*/}
-          {/*      height: "100%"*/}
-          {/*    }}*/}
-          {/*    defaultActiveFirstOption*/}
-          {/*    showArrow={true}*/}
-          {/*    value={panels}*/}
-          {/*    placeholder="Enter number of panels"*/}
-          {/*    onChange={(e) => handePanelSizeChange(e, 'left')}*/}
-          {/*    options={optionValues}*/}
-          {/*/>*/}
-          {/*<h4>{`Size per panel: ${selectedPanelSize} mm`}</h4>*/}
-          <ul className='panels-list'>
-            <li className='panels-list__item'>
-              <span className='panels-list__label'>150 mm Panel</span>
-              <button className="panels-list__btn" onClick={() => addPanelToSchema(150)}>Add panel to schema</button>
-            </li>
-            <li className='panels-list__item'>
-              <span className='panels-list__label'>350 mm Panel</span>
-              <button className="panels-list__btn" onClick={() => addPanelToSchema(350)}>Add panel to schema</button>
-            </li>
-            <li className='panels-list__item'>
-              <span className='panels-list__label'>550 mm Panel</span>
-              <button className="panels-list__btn" onClick={() => addPanelToSchema(550)}>Add panel to schema</button>
-            </li>
-            <li className='panels-list__item'>
-              <span className='panels-list__label'>750 mm Panel</span>
-              <button className="panels-list__btn" onClick={() => addPanelToSchema(750)}>Add panel to schema</button>
-            </li>
-          </ul>
         </div>
-        <h3 className={`panel_price mt-45 target panel_news ${(!isObjEmpty(blueprint3d[0]?.globals?.getGlobal("selectedDoorConfiguration"))) && 'both_show'}`}>
-          {`${!isObjEmpty(blueprint3d[0]?.globals?.getGlobal("selectedDoorConfiguration")) ? 'Price per left panel = £' : 'Price per panel = £'} ${pricePerPanel}`}
-        </h3>
-        {(!isObjEmpty(blueprint3d[0]?.globals?.getGlobal("selectedDoorConfiguration")))
-            &&  <h3 className="panel_price mt-45 target panel_news less_margin">{`Price per right panel = £ ${pricePerPanelRight}`}</h3>}
 
         <div className="floating-text special_case" style={{ display: 'block'}}>
           <div className="" style={{ textAlign: 'center', background: '#212832', padding: '10px'}}>
