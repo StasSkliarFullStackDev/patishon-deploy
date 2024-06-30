@@ -22,7 +22,7 @@ import { getMemoizedCartData } from './redux/selectors/cart';
 import { Modal, Image } from 'antd';
 import { ExclamationCircleFilled } from '@ant-design/icons';
 import { isInternetConnected } from './common/utils';
-import { skipTrigger } from './customComponent/sidebar/step3';
+import { skipTrigger } from './customComponent/sidebar/step3Doors';
 import { updateConfigurationStates } from './redux/actions/configuration';
 import ThemeImages from './themes/appImage';
 

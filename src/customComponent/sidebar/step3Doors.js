@@ -14,7 +14,7 @@ import { updateConfigurationStates } from "../../redux/actions/configuration";
 
 const { TabPane } = Tabs;
 
-const Step3 = (props) => {
+const Step3Doors = (props) => {
   const dispatch = useDispatch()
   let glassPrice = 0
 
@@ -244,8 +244,8 @@ const Step3 = (props) => {
                   <Radio.Group onChange={handleChangeCategory} value={frameType.category}>
                     <div className="radio_line">
                       <div className='custom_width'>Push</div>
-                      <div className='btn_radio'><Radio defaultChecked disabled={!doorHinges[0]?.isEnabled}
-                                                        value="push"/>
+                      <div className='btn_radio'>
+                        <Radio defaultChecked disabled={!doorHinges[0]?.isEnabled} value="push"/>
                       </div>
                     </div>
                     <div className="radio_line">
@@ -287,8 +287,8 @@ const Step3 = (props) => {
             <p>Framed</p>
           </div>
         </div>
-        <h4 className="single size mb-10px">{`Sizes Of ${doorChannelTabSelected == 1 ? "Single" : "Double"} Door`}</h4>
-        <Radio.Group>
+        <h4 className="single size mb-10px">{`Sizes Of ${doorChannelTabSelected == 1 ? "Hinged" : "Sliding"} Door`}</h4>
+        <Radio.Group className='doors-size-radio-list-container'>
           {doorChannels.map((item, index) => {
             return <div className="doors-size-radio-list" key={index}>
               {item.doorSize?.map((eachDoorSize, indexOfDoorSize) => {
@@ -411,4 +411,4 @@ const Step3 = (props) => {
       </div>
   )
 }
-export default Step3
+export default Step3Doors

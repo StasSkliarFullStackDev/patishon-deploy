@@ -2448,3 +2448,7 @@ h3.glass-covering__title {
 .mb-10px {
   margin-bottom: 10px !important;
 }
+
+.doors-size-radio-list-container {
+  flex-direction: column;
+}
