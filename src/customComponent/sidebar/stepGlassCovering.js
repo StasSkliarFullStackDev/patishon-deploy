@@ -1,12 +1,18 @@
 import React from 'react'
 import {Radio} from 'antd'
+import {updateConfigurationStates} from '../../redux/actions/configuration'
+import {useDispatch, useSelector} from 'react-redux'
+import {getMemoizedConfigurationData} from '../../redux/selectors/configuration';
 
 const GlassCovering = (props) => {
-    const {
-        handleChangeState,
-        blueprint3d,
-        prevStep
-    } = props
+    const { handleChangeState } = props
+    const dispatch = useDispatch()
+    const configurationData = useSelector(getMemoizedConfigurationData)
+    const { glassCovering } = configurationData
+
+    const handleChangeGlassCovering = (value) => {
+        dispatch(updateConfigurationStates(value, 'glassCovering'))
+    }
 
     return (
         <div className='first-silder glass-covering glass-covering-container'>
@@ -14,13 +20,17 @@ const GlassCovering = (props) => {
                 <h3 className='glass-covering__title'>Glass Covering</h3>
             </div>
 
-            <Radio.Group className='column-container'>
+            <Radio.Group
+                value={glassCovering}
+                onChange={(e) => { handleChangeGlassCovering(e.target.value) }}
+                className='column-container'
+            >
                 <div className='radio_line'>
                     <div className='radio-item--with-img'>
                         <span className='radio-item__label'>Clear</span>
                         <img src='static/images/etched.png'/>
                     </div>
-                    <div className='btn_radio'><Radio defaultChecked value={'0'}/></div>
+                    <div className='btn_radio'><Radio defaultChecked value='clear'/></div>
                 </div>
 
                 <div className='radio_line'>
@@ -28,7 +38,7 @@ const GlassCovering = (props) => {
                         <span className='radio-item__label'>Etched</span>
                         <img src='static/images/etched.png'/>
                     </div>
-                    <div className='btn_radio'><Radio defaultChecked value={'1'}/></div>
+                    <div className='btn_radio'><Radio defaultChecked value='etched'/></div>
                 </div>
 
                 <div className='radio_line'>
@@ -36,7 +46,7 @@ const GlassCovering = (props) => {
                         <span className='radio-item__label'>Reeded Glass</span>
                         <img src='static/images/reeded-glass.jpg'/>
                     </div>
-                    <div className='btn_radio'><Radio value={'2'}/></div>
+                    <div className='btn_radio'><Radio value='reeded'/></div>
                 </div>
 
                 <div className='radio_line'>
@@ -44,7 +54,7 @@ const GlassCovering = (props) => {
                         <span className='radio-item__label'>Rice Paper</span>
                         <img src='static/images/rice-paper.png'/>
                     </div>
-                    <div className='btn_radio'><Radio value={'3'}/></div>
+                    <div className='btn_radio'><Radio value='rice-paper'/></div>
                 </div>
             </Radio.Group>
             

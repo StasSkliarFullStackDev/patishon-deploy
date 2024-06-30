@@ -30,7 +30,8 @@ const initialState = {
   placeOrderLoader: false,
   placeOrderSuccess: false,
   pdfUrl: null,
-  skipThirdStep: false
+  skipThirdStep: false,
+  glassCovering: 'clear'
 };
 
 export default function configurationModule(

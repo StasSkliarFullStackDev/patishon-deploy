@@ -32,7 +32,8 @@ export const getMemoizedConfigurationData = createSelector(
       placeOrderLoader,
       placeOrderSuccess,
       pdfUrl,
-      skipThirdStep
+      skipThirdStep,
+      glassCovering
     } = configurationState
 
     return {
@@ -64,7 +65,8 @@ export const getMemoizedConfigurationData = createSelector(
       placeOrderLoader,
       placeOrderSuccess,
       pdfUrl,
-      skipThirdStep
+      skipThirdStep,
+      glassCovering
     }
   }
 )
