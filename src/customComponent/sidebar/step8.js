@@ -41,6 +41,7 @@ const Step8 = (props) => {
     totalPrice,
     roomLength,
     roomBreath,
+    glassCovering
   } = configuratorData;
   const {
     // selectedDoorSize,
@@ -76,6 +77,7 @@ const Step8 = (props) => {
           ? "Floating"
           : "Fixed to one wall";
 
+    allData["glassCovering"] = glassCovering;
     allData["wallLength"] =
       +BP3D.Core.Dimensioning.cmToMeasure(partitionWallLength) ?? 0;
     allData["wallHeight"] = roomHeight;
@@ -135,7 +137,6 @@ const Step8 = (props) => {
 
     allData["name"] = productName ?? "";
     allData["partition"] = Math.floor(partitionWallLength);
-    allData["filmName"] = blueprint3d[0]?.globals?.getGlobal("selectedFilm");
     allData["frameColorCode"] = blueprint3d[0]?.globals?.getGlobal(
       "selectedColorVariant"
     );

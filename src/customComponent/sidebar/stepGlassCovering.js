@@ -2,7 +2,7 @@ import React from 'react'
 import {Radio} from 'antd'
 import {updateConfigurationStates} from '../../redux/actions/configuration'
 import {useDispatch, useSelector} from 'react-redux'
-import {getMemoizedConfigurationData} from '../../redux/selectors/configuration';
+import {getMemoizedConfigurationData} from '../../redux/selectors/configuration'
 
 const GlassCovering = (props) => {
     const { handleChangeState } = props
@@ -38,7 +38,7 @@ const GlassCovering = (props) => {
                         <span className='radio-item__label'>Etched</span>
                         <img src='static/images/etched.png'/>
                     </div>
-                    <div className='btn_radio'><Radio defaultChecked value='etched'/></div>
+                    <div className='btn_radio'><Radio value='etched'/></div>
                 </div>
 
                 <div className='radio_line'>
