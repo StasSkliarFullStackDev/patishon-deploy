@@ -31,3 +31,53 @@
   font-weight: 800;
   margin-left: 10px;
 }
+
+.sortable-item-1,
+.sortable-item-2 {
+  display: flex;
+  width: 100%;
+}
+
+.sortable-item-1 {
+  margin-bottom: 100px;
+  gap: 15px;
+}
+
+.sortable-item-2 {
+  border: 3px solid yellow;
+}
+
+.sortable-item-1__item,
+.sortable-item-2__item,
+.sortable-door__item {
+  width: 100%;
+  max-width: 100px;
+  height: 100px;
+  background: #ffffff;
+  border: 2px solid red;
+  padding: 10px 5px;
+  font-size: 12px;
+  cursor: pointer;
+}
+
+.sortable-item-1__item:first-child {
+  max-width: 40px;
+}
+
+.sortable-item-1__item:nth-child(2) {
+  max-width: 55px;
+}
+
+.sortable-item-1__item:nth-child(3) {
+  max-width: 80px;
+}
+
+.sortable-item-1__item:nth-child(4) {
+  max-width: 110px;
+}
+
+.patishon-container-scroll {
+  display: flex !important;
+  overflow-x: scroll;
+  scrollbar-width: thin;
+}

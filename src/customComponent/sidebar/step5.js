@@ -10,6 +10,7 @@ import { dollyInZoom, isInternetConnected, isObjEmpty } from "../../common/utils
 import { BP3D } from "../../common/blueprint3d";
 import { InfoCircleOutlined } from "@ant-design/icons";
 import "./step5.css";
+import {ReactSortable, Sortable} from "react-sortablejs";
 
 const Step5 = (props) => {
   const configuratorData = useSelector(getMemoizedConfigurationData)
@@ -126,11 +127,30 @@ const Step5 = (props) => {
     }
   }
 
-  const text = (val) => <span style={{ fontSize: '14px'}}>{val}</span>;
+  const [items, setItems] = useState([
+    { id: 1, name: '150 mm' },
+    { id: 2, name: '350 mm' },
+    { id: 3, name: '550 mm' },
+    { id: 4, name: '750 mm' }
+  ]);
 
-  const addPanelToSchema = (sizeOfPanel) => {
+  const [leftPanels, setLeftPanels] = useState([
+  ]);
 
-  }
+  const [doorSortableItem, setDoorSortableItem] = useState([
+    { id: 6, name: 'Door' }
+  ]);
+
+  const [rightPanels, setRightPanels] = useState([
+  ]);
+
+  const cloneFunction = (item) => {
+    return { ...item, id: new Date().getTime() }; // Обновляем id для клонированных элементов
+  };
+
+  const removeSortableItem = (id, setList) => {
+    setList((prevList) => prevList.filter((item) => item.id !== id));
+  };
 
   return (
       <div className='step4 step4WithPrice'>
@@ -141,6 +161,69 @@ const Step5 = (props) => {
           </div>
         </div>
         <div className="first-silder">
+          <ReactSortable
+              tag='div'
+              className='sortable-item-1'
+              list={items}
+              setList={setItems}
+              group={{ name: 'shared', pull: 'clone', put: false }}
+              sort={false}
+          >
+            {items.map((item, index) => (
+                <div className='sortable-item-1__item' key={item.id}>{item.name}</div>
+            ))}
+          </ReactSortable>
+
+          <div className="patishon-container-scroll">
+            <ReactSortable
+                tag='div'
+                className='sortable-item-2'
+                list={leftPanels}
+                setList={setLeftPanels}
+                group={{name: 'shared', pull: 'clone', put: true}}
+                clone={cloneFunction}
+            >
+              {leftPanels.map((item, index) => (
+                  <div
+                      className='sortable-item-2__item'
+                      key={item.id}
+                      onClick={() => removeSortableItem(item.id, setLeftPanels)}
+                  >
+                    {item.name}
+                  </div>
+              ))}
+            </ReactSortable>
+            <ReactSortable
+                tag='div'
+                className='sortable-door'
+                list={doorSortableItem}
+                setList={setDoorSortableItem}
+                group={{name: 'shared', put: true}}
+                clone={cloneFunction}
+            >
+              {doorSortableItem.map((item, index) => (
+                  <div className='sortable-door__item' key={item.id}>{item.name}</div>
+              ))}
+            </ReactSortable>
+            <ReactSortable
+                tag='div'
+                className='sortable-item-2'
+                list={rightPanels}
+                setList={setRightPanels}
+                group={{name: 'shared', put: true}}
+                clone={cloneFunction}
+            >
+              {rightPanels.map((item, index) => (
+                  <div
+                      className='sortable-item-2__item'
+                      key={item.id}
+                      onClick={() => removeSortableItem(item.id, setRightPanels)}
+                  >
+                    {item.name}
+                  </div>
+              ))}
+            </ReactSortable>
+          </div>
         </div>
 
         <div className="floating-text special_case" style={{ display: 'block'}}>

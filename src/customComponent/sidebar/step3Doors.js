@@ -287,24 +287,24 @@ const Step3Doors = (props) => {
             <p>Framed</p>
           </div>
         </div>
-        <h4 className="single size mb-10px">{`Sizes Of ${doorChannelTabSelected == 1 ? "Hinged" : "Sliding"} Door`}</h4>
-        <Radio.Group className='doors-size-radio-list-container'>
-          {doorChannels.map((item, index) => {
-            return <div className="doors-size-radio-list" key={index}>
-              {item.doorSize?.map((eachDoorSize, indexOfDoorSize) => {
-                getPrice(eachDoorSize)
-                return (
-                    <div key={indexOfDoorSize} className='radio_line'>
-                      <div className="radio-item">
-                        <span className='radio-item__label'>{eachDoorSize.size} mm</span>
-                      </div>
-                      <div className='btn_radio'><Radio defaultChecked value={eachDoorSize.size}/></div>
-                    </div>
-                )
-              })}
-            </div>
-          })}
-        </Radio.Group>
+        {/*<h4 className="single size mb-10px">{`Sizes Of ${doorChannelTabSelected == 1 ? "Hinged" : "Sliding"} Door`}</h4>*/}
+        {/*<Radio.Group className='doors-size-radio-list-container'>*/}
+        {/*  {doorChannels.map((item, index) => {*/}
+        {/*    return <div className="doors-size-radio-list" key={index}>*/}
+        {/*      {item.doorSize?.map((eachDoorSize, indexOfDoorSize) => {*/}
+        {/*        getPrice(eachDoorSize)*/}
+        {/*        return (*/}
+        {/*            <div key={indexOfDoorSize} className='radio_line'>*/}
+        {/*              <div className="radio-item">*/}
+        {/*                <span className='radio-item__label'>{eachDoorSize.size} mm</span>*/}
+        {/*              </div>*/}
+        {/*              <div className='btn_radio'><Radio defaultChecked value={eachDoorSize.size}/></div>*/}
+        {/*            </div>*/}
+        {/*        )*/}
+        {/*      })}*/}
+        {/*    </div>*/}
+        {/*  })}*/}
+        {/*</Radio.Group>*/}
         {doorGlass === 1 && <div className="toggle_slider">
           <div className='first-silder'>
             <h3>Number of Horizontal Bars</h3>
