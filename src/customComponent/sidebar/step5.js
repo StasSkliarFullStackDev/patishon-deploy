@@ -162,6 +162,14 @@ const Step5 = (props) => {
     }
   }
 
+  const onApplyChanges = () => {
+    if (addedPanels[0].name === "Door" || addedPanels[addedPanels.length - 1].name === "Door") {
+      alert("Door can not be on the start or on the end of Patishon")
+    } else {
+      alert("Feature in progress")
+    }
+  }
+
   useEffect(() => {
     setCurrentWidth(calcCurrentWidth())
   }, [addedPanels]);
@@ -180,11 +188,12 @@ const Step5 = (props) => {
               className='sortable-item-1'
               list={items}
               setList={setItems}
-              group={{ name: 'shared', pull: 'clone', put: false }}
+              group={{name: 'shared', pull: 'clone', put: false}}
               sort={false}
           >
             {items.map((item, index) => (
-                <div className={'sortable-item-1__item ' + ('panel--' + item.value + 'mm')} key={item.id}>{item.name}</div>
+                <div className={'sortable-item-1__item ' + ('panel--' + item.value + 'mm')}
+                     key={item.id}>{item.name}</div>
             ))}
           </ReactSortable>
 
@@ -215,23 +224,33 @@ const Step5 = (props) => {
                           ×
                         </div>
                         : ''
-                    }
+                  }
                 </div>
             ))}
           </ReactSortable>
         </div>
 
-        <span className='width-label'>Room width: { maximumWidth }mm</span>
-        <span className='width-label'>Patishon width: { currentWidth }mm</span>
-        <span className='width-label'>Remain: { maximumWidth - currentWidth }mm</span>
+        <span className='width-label'>Room width: {maximumWidth}mm</span>
+        <span className='width-label'>Patishon width: {currentWidth}mm</span>
+        <span className='width-label'>Remain: {maximumWidth - currentWidth}mm</span>
 
-        <div className="floating-text special_case" style={{ display: 'block'}}>
-          <div className="" style={{ textAlign: 'center', background: '#212832', padding: '10px'}}>
+        <button
+            type='button'
+            onClick={() => onApplyChanges()}
+            className='sucess_button'
+        >
+          Apply changes
+        </button>
+
+        <div className="floating-text special_case" style={{display: 'block'}}>
+          <div className="" style={{textAlign: 'center', background: '#212832', padding: '10px'}}>
             <button type='submit' onClick={() => {
               handleChangeState(undefined, 6)
-            }} className='sucess_button'>Next</button>
+            }} className='sucess_button'>Next
+            </button>
           </div>
-          <div className="new_floating" style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '0 20px'}}>
+          <div className="new_floating"
+               style={{display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '0 20px'}}>
             <p>total<br></br> price</p>
             <h3>{`£${totalPrice}`}</h3>
           </div>
