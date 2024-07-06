@@ -234,19 +234,13 @@ const Step5 = (props) => {
         <span className='width-label'>Patishon width: {currentWidth}mm</span>
         <span className='width-label'>Remain: {maximumWidth - currentWidth}mm</span>
 
-        <button
-            type='button'
-            onClick={() => onApplyChanges()}
-            className='sucess_button'
-        >
-          Apply changes
-        </button>
-
         <div className="floating-text special_case" style={{display: 'block'}}>
           <div className="" style={{textAlign: 'center', background: '#212832', padding: '10px'}}>
             <button type='submit' onClick={() => {
-              handleChangeState(undefined, 6)
-            }} className='sucess_button'>Next
+              // handleChangeState(undefined, 6)
+              onApplyChanges()
+            }} className='sucess_button'>
+              Apply changes
             </button>
           </div>
           <div className="new_floating"
