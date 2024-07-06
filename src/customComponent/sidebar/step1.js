@@ -17,7 +17,7 @@ import {
 } from "@ant-design/icons";
 import { BP3D } from "../../common/blueprint3d";
 
-const { Option } = Select; // добавлен Option
+const { Option } = Select;
 
 /**
  * The init Structure make default 4000
@@ -106,7 +106,22 @@ const Step1 = (props) => {
   };
 
   const onChangeBreath = (value, firstRenderer = null) => {
-    console.log(value, "onChangeBreath");
+    dispatch(
+        updateConfigurationStates(
+            +value?.target?.value,
+            "clientWallWidth"
+        )
+    );
+
+    if (typeof value === 'number') {
+      dispatch(
+          updateConfigurationStates(
+              +value,
+              "clientWallWidth"
+          )
+      );
+    }
+
     if (+value?.target?.value >= 1000 && +value?.target?.value <= 9000) {
       value = value.target.value;
     }

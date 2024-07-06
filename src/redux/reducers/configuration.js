@@ -31,7 +31,8 @@ const initialState = {
   placeOrderSuccess: false,
   pdfUrl: null,
   skipThirdStep: false,
-  glassCovering: 'clear'
+  glassCovering: 'clear',
+  clientWallWidth: 0
 };
 
 export default function configurationModule(

@@ -132,3 +132,24 @@
   transform: scale(0.9);
   transition: opacity 300ms, transform 300ms;
 }
+
+.button-container {
+  text-align: center;
+  background: #212832;
+  padding: 10px;
+}
+
+.top-decor-line {
+  position: relative;
+  height: 3px;
+  background: #7cb305;
+  margin-bottom: 10px;
+}
+
+.top-decor-line__text {
+  position: absolute;
+  top: -23px;
+  left: 50%;
+  transform: translateX(-50%);
+  color: #ffffff;
+}
