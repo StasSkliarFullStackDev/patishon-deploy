@@ -1,16 +1,14 @@
-import React, { useEffect, useLayoutEffect, useState } from "react"
-import { Select, Tooltip } from 'antd';
-import { useDispatch, useSelector } from "react-redux";
-import { getMemoizedConfigurationData } from "../../redux/selectors/configuration";
-import { getMemoizedBlueprint3dData } from "../../redux/selectors/blueprint3d";
-import { updateEngineStatesAction } from "../../redux/actions/blueprint3d";
-import { updateConfigurationStates } from "../../redux/actions/configuration";
-import { setdollyInCount } from "../../hoc/mainLayout";
-import { dollyInZoom, isInternetConnected, isObjEmpty } from "../../common/utils";
-import { BP3D } from "../../common/blueprint3d";
-import { InfoCircleOutlined } from "@ant-design/icons";
+import React, {useEffect, useState} from "react"
+import {useDispatch, useSelector} from "react-redux";
+import {getMemoizedConfigurationData} from "../../redux/selectors/configuration";
+import {getMemoizedBlueprint3dData} from "../../redux/selectors/blueprint3d";
+import {updateEngineStatesAction} from "../../redux/actions/blueprint3d";
+import {updateConfigurationStates} from "../../redux/actions/configuration";
+import {setdollyInCount} from "../../hoc/mainLayout";
+import {dollyInZoom, isInternetConnected, isObjEmpty} from "../../common/utils";
+import {BP3D} from "../../common/blueprint3d";
 import "./step5.css";
-import {ReactSortable, Sortable} from "react-sortablejs";
+import {ReactSortable} from "react-sortablejs";
 
 const Step5 = (props) => {
   const configuratorData = useSelector(getMemoizedConfigurationData)
@@ -127,30 +125,46 @@ const Step5 = (props) => {
     }
   }
 
+  const [maximumWidth, setMaximumWidth] = useState(6000)
+  const [currentWidth, setCurrentWidth] = useState(0)
+
   const [items, setItems] = useState([
-    { id: 1, name: '150 mm' },
-    { id: 2, name: '350 mm' },
-    { id: 3, name: '550 mm' },
-    { id: 4, name: '750 mm' }
+    { id: 1, name: '150 mm', value: 150 },
+    { id: 2, name: '350 mm', value: 350 },
+    { id: 3, name: '550 mm', value: 550 },
+    { id: 4, name: '750 mm', value: 750 }
   ]);
 
-  const [leftPanels, setLeftPanels] = useState([
-  ]);
-
-  const [doorSortableItem, setDoorSortableItem] = useState([
-    { id: 6, name: 'Door' }
-  ]);
-
-  const [rightPanels, setRightPanels] = useState([
+  const [addedPanels, setAddedPanels] = useState([
+    { id: 1, name: 'Door', value: 768 },
   ]);
 
   const cloneFunction = (item) => {
-    return { ...item, id: new Date().getTime() }; // Обновляем id для клонированных элементов
+    return { ...item, id: new Date().getTime() };
   };
 
   const removeSortableItem = (id, setList) => {
     setList((prevList) => prevList.filter((item) => item.id !== id));
   };
+
+  const calcCurrentWidth = () => {
+    return addedPanels.reduce((total, item) => total + item.value, 0)
+  }
+
+  const onSetSortableList = (newState) => {
+    const newPanel = newState.find(item => !addedPanels.some(panel => panel.id === item.id));
+
+    const remainWidth = maximumWidth - currentWidth;
+    if (newState.length > addedPanels.length && newPanel && newPanel.value > remainWidth) {
+      alert("Cannot add panel, not enough space!");
+    } else {
+      setAddedPanels(newState);
+    }
+  }
+
+  useEffect(() => {
+    setCurrentWidth(calcCurrentWidth())
+  }, [addedPanels]);
 
   return (
       <div className='step4 step4WithPrice'>
@@ -170,61 +184,46 @@ const Step5 = (props) => {
               sort={false}
           >
             {items.map((item, index) => (
-                <div className='sortable-item-1__item' key={item.id}>{item.name}</div>
+                <div className={'sortable-item-1__item ' + ('panel--' + item.value + 'mm')} key={item.id}>{item.name}</div>
             ))}
           </ReactSortable>
 
-          <div className="patishon-container-scroll">
-            <ReactSortable
-                tag='div'
-                className='sortable-item-2'
-                list={leftPanels}
-                setList={setLeftPanels}
-                group={{name: 'shared', pull: 'clone', put: true}}
-                clone={cloneFunction}
-            >
-              {leftPanels.map((item, index) => (
-                  <div
-                      className='sortable-item-2__item'
-                      key={item.id}
-                      onClick={() => removeSortableItem(item.id, setLeftPanels)}
-                  >
-                    {item.name}
-                  </div>
-              ))}
-            </ReactSortable>
-            <ReactSortable
-                tag='div'
-                className='sortable-door'
-                list={doorSortableItem}
-                setList={setDoorSortableItem}
-                group={{name: 'shared', put: true}}
-                clone={cloneFunction}
-            >
-              {doorSortableItem.map((item, index) => (
-                  <div className='sortable-door__item' key={item.id}>{item.name}</div>
-              ))}
-            </ReactSortable>
-            <ReactSortable
-                tag='div'
-                className='sortable-item-2'
-                list={rightPanels}
-                setList={setRightPanels}
-                group={{name: 'shared', put: true}}
-                clone={cloneFunction}
-            >
-              {rightPanels.map((item, index) => (
-                  <div
-                      className='sortable-item-2__item'
-                      key={item.id}
-                      onClick={() => removeSortableItem(item.id, setRightPanels)}
-                  >
-                    {item.name}
-                  </div>
-              ))}
-            </ReactSortable>
-          </div>
+          <ReactSortable
+              tag='div'
+              className='patishon-container-scroll sortable-item-2'
+              list={addedPanels}
+              setList={(newState) => onSetSortableList(newState)}
+              group={{name: 'shared', pull: 'clone', put: true}}
+              clone={cloneFunction}
+              animation={400}
+              swap={true}
+              delayOnTouchStart={true}
+              delay={2}
+          >
+            {addedPanels.map((item, index) => (
+                <div
+                    className={'sortable-item-1__item ' + (item.value ? ('panel--' + item.value + 'mm') : '')}
+                    key={item.id}
+                >
+                  <span>{item.name}</span>
+                  {
+                    item.name !== 'Door'
+                        ? <div
+                            onClick={() => removeSortableItem(item.id, setAddedPanels)}
+                            className="remove-item-icon"
+                        >
+                          ×
+                        </div>
+                        : ''
+                    }
+                </div>
+            ))}
+          </ReactSortable>
         </div>
+
+        <span className='width-label'>Room width: { maximumWidth }mm</span>
+        <span className='width-label'>Patishon width: { currentWidth }mm</span>
+        <span className='width-label'>Remain: { maximumWidth - currentWidth }mm</span>
 
         <div className="floating-text special_case" style={{ display: 'block'}}>
           <div className="" style={{ textAlign: 'center', background: '#212832', padding: '10px'}}>

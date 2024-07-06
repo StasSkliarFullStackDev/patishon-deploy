@@ -300,10 +300,9 @@ body {
 }
 
 .rightsiderbar {
-  width: 300px;
   position: fixed;
   right: -343px;
-  width: 391px;
+  width: 1000px;
   background: var(--appTheme);
   padding: 0px 28px;
   top: 50px;

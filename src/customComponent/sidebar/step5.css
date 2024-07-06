@@ -32,8 +32,7 @@
   margin-left: 10px;
 }
 
-.sortable-item-1,
-.sortable-item-2 {
+.sortable-item-1 {
   display: flex;
   width: 100%;
 }
@@ -43,41 +42,91 @@
   gap: 15px;
 }
 
-.sortable-item-2 {
-  border: 3px solid yellow;
-}
-
-.sortable-item-1__item,
-.sortable-item-2__item,
-.sortable-door__item {
-  width: 100%;
-  max-width: 100px;
+.sortable-item-1__item {
   height: 100px;
   background: #ffffff;
-  border: 2px solid red;
-  padding: 10px 5px;
+  padding: 30px 5px;
+  text-align: center;
   font-size: 12px;
+  border: 1px solid blue;
+  position: relative;
+}
+
+.remove-item-icon {
+  position: absolute;
+  top: 2px;
+  right: 2px;
+  font-size: 18px;
+  line-height: 100%;
   cursor: pointer;
 }
 
-.sortable-item-1__item:first-child {
-  max-width: 40px;
+.remove-item-icon:hover {
+  scale: 1.6;
 }
 
-.sortable-item-1__item:nth-child(2) {
-  max-width: 55px;
+.panel--150mm .remove-item-icon {
+  top: 0;
+  right: -2px;
 }
 
-.sortable-item-1__item:nth-child(3) {
-  max-width: 80px;
+.panel--150mm {
+  width: calc(150 * 0.1125px);
+  writing-mode: vertical-lr;
+  padding: 20px 0;
+  line-height: 105%;
 }
 
-.sortable-item-1__item:nth-child(4) {
-  max-width: 110px;
+.panel--350mm {
+  width: calc(350 * 0.1125px);
+}
+
+.panel--550mm {
+  width: calc(550 * 0.1125px);
+}
+
+.panel--750mm {
+  width: calc(750 * 0.1125px);
+}
+
+.panel--768mm {
+  width: calc(750 * 0.1125px);
 }
 
 .patishon-container-scroll {
   display: flex !important;
-  overflow-x: scroll;
-  scrollbar-width: thin;
+  width: calc(6000 * 0.1125px);
+  border: 1px solid yellow;
+  margin-bottom: 20px;
+  min-height: 100px;
+}
+
+.width-label {
+  color: white;
+  display: block;
+  margin-bottom: 5px;
+  font-size: 20px;
+}
+
+/* Добавьте эти стили в ваш CSS файл */
+.sortable-item-enter {
+  opacity: 0;
+  transform: scale(0.9);
+}
+
+.sortable-item-enter-active {
+  opacity: 1;
+  transform: scale(1);
+  transition: opacity 300ms, transform 300ms;
+}
+
+.sortable-item-exit {
+  opacity: 1;
+  transform: scale(1);
+}
+
+.sortable-item-exit-active {
+  opacity: 0;
+  transform: scale(0.9);
+  transition: opacity 300ms, transform 300ms;
 }
