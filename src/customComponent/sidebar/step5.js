@@ -125,7 +125,7 @@ const Step5 = (props) => {
     }
   }
 
-  const [maximumWidth, setMaximumWidth] = useState(6000)
+  const [maximumWidth, setMaximumWidth] = useState(5000)
   const [currentWidth, setCurrentWidth] = useState(0)
 
   const [items, setItems] = useState([
