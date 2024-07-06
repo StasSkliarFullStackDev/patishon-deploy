@@ -309,7 +309,10 @@ const Rightsiderbar = (props) => {
   return (
 
 
-    <div className={`rightsiderbar rightsiderbarWithConfirmPop ${sidebarCollapsed ? 'hide_slide-left' : 'show_slide-left'} ${(step !== 4 && step !== 5) && 'extra_spacing'}`}>
+    <div
+        className={`rightsiderbar rightsiderbarWithConfirmPop ${sidebarCollapsed ? 'hide_slide-left' : 'show_slide-left'} ${(step !== 4 && step !== 5) && 'extra_spacing'}`}
+        style={{ width: (step === 5 ? "750px" : "391px") }}
+    >
       <FontAwesomeIcon
         style={{ cursor: 'pointer' }}
         icon={faXmark}

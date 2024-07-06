@@ -98,7 +98,7 @@
 
 .patishon-container-scroll {
   display: flex !important;
-  width: calc(6000 * 0.1125px);
+  width: calc(6000 * 0.1125px + 10px);
   border: 7px solid #747474;
   margin-bottom: 20px;
   min-height: 100px;
@@ -111,7 +111,6 @@
   font-size: 20px;
 }
 
-/* Добавьте эти стили в ваш CSS файл */
 .sortable-item-enter {
   opacity: 0;
   transform: scale(0.9);

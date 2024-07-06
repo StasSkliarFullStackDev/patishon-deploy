@@ -302,7 +302,7 @@ body {
 .rightsiderbar {
   position: fixed;
   right: -343px;
-  width: 1000px;
+  width: 391px;
   background: var(--appTheme);
   padding: 0px 28px;
   top: 50px;
