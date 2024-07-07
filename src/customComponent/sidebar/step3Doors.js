@@ -211,7 +211,7 @@ const Step3Doors = (props) => {
     element.scrollIntoView({ block: 'start', behavior: 'smooth' });
   }
   useEffect(() => {
-    if (skipThirdStep) {
+    if (skipThirdStep && prevStep === 2) {
       onSkip()
     }
   }, [skipThirdStep])

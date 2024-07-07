@@ -3,9 +3,11 @@ import {useDispatch, useSelector} from "react-redux";
 import {getMemoizedConfigurationData} from "../../redux/selectors/configuration";
 import "./step5.css";
 import {ReactSortable} from "react-sortablejs";
+import {getMemoizedBlueprint3dData} from "../../redux/selectors/blueprint3d";
 
 const Step5 = (props) => {
   const configuratorData = useSelector(getMemoizedConfigurationData)
+  const blueprint3dDataData = useSelector(getMemoizedBlueprint3dData)
   const dispatch = useDispatch()
 
   const {
@@ -14,12 +16,17 @@ const Step5 = (props) => {
   } = configuratorData
 
   const {
+    selectedDoorSize
+  } = blueprint3dDataData
+
+  const {
     handleChangeState,
   } = props
 
 
   const [maximumWidth, setMaximumWidth] = useState(clientWallWidth)
   const [currentWidth, setCurrentWidth] = useState(0)
+  const [panelDragged, setPanelDragged] = useState(false)
 
   const [items, setItems] = useState([
     { id: 1, name: '150 mm', value: 150 },
@@ -32,7 +39,7 @@ const Step5 = (props) => {
 
   useEffect(() => {
     if (!skipThirdStep) {
-      setAddedPanels([{ id: 1, name: 'Door', value: 768 }])
+      setAddedPanels([{ id: 1, name: 'Door', value: selectedDoorSize }])
     }
   }, [skipThirdStep]);
 
@@ -81,6 +88,8 @@ const Step5 = (props) => {
         </div>
 
         <div className="first-silder">
+          <span className='width-label'>Drag and drop the panels to the drawing below</span>
+
           <ReactSortable
               tag='div'
               className='sortable-item-1'
@@ -88,6 +97,8 @@ const Step5 = (props) => {
               setList={setItems}
               group={{name: 'shared', pull: 'clone', put: false}}
               sort={false}
+              onChoose={() => setPanelDragged(true)}
+              onUnchoose={() => setPanelDragged(false)}
           >
             {items.map((item, index) => (
                 <div
@@ -101,7 +112,7 @@ const Step5 = (props) => {
 
           <div
               className="top-decor-line"
-              style={{ width: clientWallWidth * 0.1125 + 10 + 'px' }}
+              style={{width: clientWallWidth * 0.1125 + 10 + 'px'}}
           >
             <div className="top-decor-line__text">
               {clientWallWidth} mm
@@ -110,7 +121,7 @@ const Step5 = (props) => {
 
           <ReactSortable
               tag='div'
-              className='patishon-container-scroll'
+              className={panelDragged ? 'patishon-container-scroll patishon-container-scroll--active' : 'patishon-container-scroll'}
               list={addedPanels}
               setList={(newState) => onSetSortableList(newState)}
               group={{name: 'shared', pull: 'clone', put: true}}
@@ -119,7 +130,7 @@ const Step5 = (props) => {
               swap={true}
               delayOnTouchStart={true}
               delay={2}
-              style={{ width: clientWallWidth * 0.1125 + 10 + 'px' }}
+              style={{width: clientWallWidth * 0.1125 + 10 + 'px'}}
           >
             {addedPanels.map((item, index) => (
                 <div
@@ -129,21 +140,21 @@ const Step5 = (props) => {
                   <span>{item.name}</span>
 
                   {item.name !== 'Door'
-                        ? <div
-                            onClick={() => removeSortableItem(item.id, setAddedPanels)}
-                            className="remove-item-icon"
-                        >
-                          ×
-                        </div>
-                        : ''
+                      ? <div
+                          onClick={() => removeSortableItem(item.id, setAddedPanels)}
+                          className="remove-item-icon"
+                      >
+                        ×
+                      </div>
+                      : ''
                   }
                 </div>
             ))}
           </ReactSortable>
         </div>
 
-        <span className='width-label'>Room width: {maximumWidth}mm</span>
-        <span className='width-label'>Your Patishon width: {currentWidth}mm</span>
+        <span className='width-label'>Your Room Width: {maximumWidth}mm</span>
+        <span className='width-label'>Your Patishon Width: {currentWidth}mm</span>
         <span className='width-label'>Remain: {maximumWidth - currentWidth}mm</span>
 
         <div className="floating-text special_case" style={{display: 'block'}}>

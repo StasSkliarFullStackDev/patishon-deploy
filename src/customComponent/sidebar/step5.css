@@ -38,7 +38,7 @@
 }
 
 .sortable-item-1 {
-  margin-bottom: 100px;
+  margin-bottom: 70px;
   gap: 15px;
 }
 
@@ -96,41 +96,34 @@
   width: calc(750 * 0.1125px);
 }
 
+.panel--1488mm {
+  width: calc(1488 * 0.1125px);
+}
+
 .patishon-container-scroll {
   display: flex !important;
   width: calc(5000 * 0.1125px + 10px);
   border: 7px solid #747474;
   margin-bottom: 20px;
   min-height: 100px;
+  transition: all .3s ease;
+}
+
+.patishon-container-scroll--active {
+  background: rgba(33, 40, 50, 0.7);
+  transition: all .3s ease;
+  border: 7px dashed #747474;
 }
 
 .width-label {
   color: white;
   display: block;
   margin-bottom: 5px;
-  font-size: 20px;
+  font-size: 18px;
 }
 
-.sortable-item-enter {
-  opacity: 0;
-  transform: scale(0.9);
-}
-
-.sortable-item-enter-active {
-  opacity: 1;
-  transform: scale(1);
-  transition: opacity 300ms, transform 300ms;
-}
-
-.sortable-item-exit {
-  opacity: 1;
-  transform: scale(1);
-}
-
-.sortable-item-exit-active {
-  opacity: 0;
-  transform: scale(0.9);
-  transition: opacity 300ms, transform 300ms;
+.width-label:first-child {
+  margin-bottom: 10px;
 }
 
 .button-container {
