@@ -1,7 +1,7 @@
 //Local Server
 // export const LOCAL_SERVER = "http://192.168.3.176:3005/" // Local server
 // export const LOCAL_SERVER = "http://192.168.3.174:3002/" // Local server
-export const LOCAL_SERVER = "http://fathomless-stream-75352-c4be0d847cb9.herokuapp.com/" // Dell server
+export const LOCAL_SERVER = "https://fathomless-stream-75352-c4be0d847cb9.herokuapp.com/" // Dell server
 
 // SERVER
 
