@@ -41,7 +41,8 @@ const Step8 = (props) => {
     totalPrice,
     roomLength,
     roomBreath,
-    glassCovering
+    glassCovering,
+    numberOfhorizontalFrames
   } = configuratorData;
   const {
     // selectedDoorSize,
@@ -140,13 +141,11 @@ const Step8 = (props) => {
     allData["frameColorCode"] = blueprint3d[0]?.globals?.getGlobal(
       "selectedColorVariant"
     );
-    allData["frameVarient"] = blueprint3d[0]?.globals?.getGlobal(
-      "selectedColorVariant"
-    );
     allData["frameType"] = blueprint3d[0]?.globals?.getGlobal(
       "selectedMetalFrameType"
     );
     allData["price"] = totalPrice;
+    allData["numberOfHorizontalFrames"] = numberOfhorizontalFrames;
     data.push(allData);
     if (actionType == "cart") {
       handleCheck().then((e) => {
