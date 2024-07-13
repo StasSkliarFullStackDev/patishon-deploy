@@ -11,6 +11,8 @@ import { getMemoizedConfigurationData } from "../../redux/selectors/configuratio
 import { BP3D } from "../../common/blueprint3d";
 import { toast } from "react-nextjs-toast";
 import { updateConfigurationStates } from "../../redux/actions/configuration";
+import axios from "axios";
+import {LOCAL_SERVER} from "../../constant";
 
 const { TabPane } = Tabs;
 
@@ -216,62 +218,177 @@ const Step3Doors = (props) => {
     }
   }, [skipThirdStep])
 
+  const [doors, setDoors] = React.useState([])
+  const [doorCategory, setDoorCategory] = React.useState('hinged');
+  const [doorType, setDoorType] = React.useState('single');
+  const [typeOfOpening, setTypeOfOpening] = React.useState('push');
+  const [directionOfOpening, setDirectionOfOpening] = React.useState('left');
+  const [handlePosition, setHandlePosition] = React.useState('left');
+  const [doorSize, setDoorSize] = React.useState('100');
+  const [doorSizeList, setDoorSizeList] = React.useState();
+
+  const getDoors = async () => {
+    try {
+      const response = await axios.get(LOCAL_SERVER + 'api/v1/admin/doorList')
+      setDoors(response.data.data)
+    } catch (error) {
+      console.log(error)
+    }
+  }
+
+  const doorPropertiesFilled = () => {
+    if (!doorCategory || !doorType) {
+      return false;
+    }
+
+    if (doorCategory === 'hinged' && !typeOfOpening) {
+      return false;
+    }
+
+    if (doorCategory === 'sliding' && doorType === 'single' && !directionOfOpening) {
+      return false;
+    }
+
+    if ((doorCategory === 'hinged' && doorType === 'single') || (doorCategory === 'sliding' && doorType === 'single')) {
+      if (!handlePosition) {
+        return false;
+      }
+    }
+
+    return true
+  }
+
+  const calcDoorSizeList = () => {
+    const filteredDoors = doors.filter(door => {
+      return (
+          (door.doorCategory === doorCategory) &&
+          (door.doorType === doorType) &&
+          (doorCategory === 'hinged' ? (typeOfOpening ? (door.typeOfOpening === typeOfOpening) : true) : true) &&
+          ((doorCategory === 'sliding' && doorType === 'single') ? (directionOfOpening ? (door.directionOfOpening === directionOfOpening) : true) : true) &&
+          (((doorCategory === 'hinged' && doorType === 'single') || (doorCategory === 'sliding' && doorType === 'single')) ? (handlePosition ?( door.handlePosition === handlePosition) : true) : true)
+      );
+    })
+
+    const newDoorSizeList = filteredDoors.map(item => item.doorSize)
+    setDoorSizeList([...newDoorSizeList])
+  }
+
+  useEffect(() => {
+    getDoors()
+  }, []);
+
+  useEffect(() => {
+    if(doorPropertiesFilled()) calcDoorSizeList()
+  }, [doorCategory, doorType, typeOfOpening, directionOfOpening, handlePosition]);
+
   return (
       <div className='step4 custom_height'>
         <div className='dimensions-data'>
           <h3>Doors</h3>
         </div>
         <div>
-          <h4 className="single door_p door_point">Door Type</h4>
-          <div className="good">
-            <Radio.Group onChange={handleChangedoorChannelTab} value={doorChannelTabSelected}>
-              <div className="radio_line">
-                <div className='custom_width'>Hinged</div>
-                <div className='btn_radio'><Radio defaultChecked value={'1'}/></div>
-              </div>
-              <div className="radio_line">
-                <div className='custom_width'>Sliding</div>
-                <div className='btn_radio'><Radio value={'2'}/></div>
-              </div>
-            </Radio.Group>
-          </div>
-        </div>
-        {doorChannelTabSelected == 1 ?
-            <>
-              <div className="category-details bg_home">
-                <h3>Door Direction</h3>
-                <div className="good">
-                  <Radio.Group onChange={handleChangeCategory} value={frameType.category}>
+          <div className="good" style={{flexDirection: 'column', gap: 15}}>
+            <div>
+              <h4 className="single door_p door_point">Door Category</h4>
+              <Radio.Group onChange={(e) => setDoorCategory(e.target.value)} value={doorCategory}>
+                <div className="radio_line">
+                  <div className='custom_width'>Hinged</div>
+                  <div className='btn_radio'><Radio value={'hinged'}/></div>
+                </div>
+                <div className="radio_line">
+                  <div className='custom_width'>Sliding</div>
+                  <div className='btn_radio'><Radio value={'sliding'}/></div>
+                </div>
+              </Radio.Group>
+            </div>
+
+            <div>
+              <h4 className="single door_p door_point">Door Type</h4>
+              <Radio.Group onChange={(e) => setDoorType(e.target.value)} value={doorType}>
+                <div className="radio_line">
+                  <div className='custom_width'>Single</div>
+                  <div className='btn_radio'><Radio value={'single'}/></div>
+                </div>
+                <div className="radio_line">
+                  <div className='custom_width'>Double</div>
+                  <div className='btn_radio'><Radio value={'double'}/></div>
+                </div>
+              </Radio.Group>
+            </div>
+
+            {
+                (doorCategory === 'hinged') &&
+                <div>
+                  <h4 className="single door_p door_point">Type of opening</h4>
+                  <Radio.Group onChange={(e) => setTypeOfOpening(e.target.value)} value={typeOfOpening}>
                     <div className="radio_line">
                       <div className='custom_width'>Push</div>
-                      <div className='btn_radio'>
-                        <Radio defaultChecked disabled={!doorHinges[0]?.isEnabled} value="push"/>
-                      </div>
+                      <div className='btn_radio'><Radio value={'push'}/></div>
                     </div>
                     <div className="radio_line">
                       <div className='custom_width'>Pull</div>
-                      <div className='btn_radio'><Radio disabled={!doorHinges[1]?.isEnabled} value="pull"/></div>
+                      <div className='btn_radio'><Radio value={'pull'}/></div>
                     </div>
                   </Radio.Group>
                 </div>
-                {doorChannelTabSelected == 1 ?
-                    <>
-                      <h3>Hinged on the</h3>
-                      <div className="good">
-                        <Radio.Group onChange={handleChangeDirection} value={frameType.direction}>
-                          {selectedCategoryHinges.doorHinges?.map((obj, index) => {
-                            return (<div className="radio_line">
-                              <div className='custom_width'>{firstLetterUpperCase(obj.type)}</div>
-                              <div className='btn_radio'><Radio disabled={!obj.isActivated} value={obj.type}/></div>
-                            </div>);
-                          })}
-                        </Radio.Group>
-                      </div>
-                    </> :
-                    null}
-              </div>
-            </> : null
-        }
+            }
+
+            {
+                (doorCategory === 'sliding' && doorType === 'single') &&
+                <div>
+                  <h4 className="single door_p door_point">Direction of opening</h4>
+                  <Radio.Group onChange={(e) => setDirectionOfOpening(e.target.value)} value={directionOfOpening}>
+                    <div className="radio_line">
+                      <div className='custom_width'>Left</div>
+                      <div className='btn_radio'><Radio value={'left'}/></div>
+                    </div>
+                    <div className="radio_line">
+                      <div className='custom_width'>Right</div>
+                      <div className='btn_radio'><Radio value={'right'}/></div>
+                    </div>
+                  </Radio.Group>
+                </div>
+            }
+
+            {
+                ((doorCategory === 'hinged' && doorType === 'single') || (doorCategory === 'sliding' && doorType === 'single')) &&
+                <div>
+                  <h4 className="single door_p door_point">Handle position</h4>
+                  <Radio.Group onChange={(e) => setHandlePosition(e.target.value)} value={handlePosition}>
+                    <div className="radio_line">
+                      <div className='custom_width'>Left</div>
+                      <div className='btn_radio'><Radio value={'left'}/></div>
+                    </div>
+                    <div className="radio_line">
+                      <div className='custom_width'>Right</div>
+                      <div className='btn_radio'><Radio value={'right'}/></div>
+                    </div>
+                  </Radio.Group>
+                </div>
+            }
+
+            <div>
+              <h4 className="single door_p door_point">Door size</h4>
+              <Radio.Group
+                  onChange={(e) => setDoorSize(e.target.value)}
+                  value={doorSize}
+                  style={{flexDirection: 'column', gap: 10}}
+              >
+                {
+                  doorSizeList && doorSizeList.map((item, index) => {
+                    return (
+                        <div key={index} className="radio_line">
+                          <div className='btn_radio p-0'><Radio value={item}/></div>
+                          <div className='custom_width'>{item}</div>
+                        </div>
+                    )
+                  })
+                }
+              </Radio.Group>
+            </div>
+          </div>
+        </div>
+
         <h4 className="single door_p door_point">Door Style</h4>
         <div className="panelsizes sizes space-line door_point ">
           <div className={doorGlass === 1 ? 'wrapper_frames' : 'wrapper_frames active'}>
