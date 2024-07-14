@@ -32,10 +32,10 @@ const Step3Doors = (props) => {
   const {
     doorHandles,
     partitionLeftWallLength,
-    partitionRightWallLength,
     step3HandleApply,
     roomHeight,
-    skipThirdStep
+    skipThirdStep,
+    newDoor
   } = configurationData
 
   let reducerData = blueprint3d[0]?.globals?.getGlobal("selectedDoorConfiguration")
@@ -80,14 +80,26 @@ const Step3Doors = (props) => {
 
       blueprint3d[0]?.globals?.setGlobal("selectedDoorConfiguration", {
         hinges: { category: doorType, direction: trueDirection },
-        doorGlass: doorGlass,
+        doorGlass,
         selectedDoorSize: doorSize,
-        doorType: doorType,
+        doorType,
         selectedHandle: defaultHandleIndex,
         horizontalBarForDoor: numbersOfBars
       })
       reducerBluePrint?.BP3DData.model.floorplan.update()
       dollyInZoom(BP3DData)
+
+      dispatch(updateConfigurationStates({
+        doorCategory,
+        doorType,
+        typeOfOpening,
+        directionOfOpening,
+        handlePosition,
+        doorSize,
+        doorSizeList,
+        doorGlass,
+        numbersOfBars
+      }, 'newDoor'))
     }
   }
 
@@ -166,9 +178,32 @@ const Step3Doors = (props) => {
     setDoorSize(newDoorSizeList[0] || 0)
   }
 
+  const goToNextStep = () => {
+    if (doorSize && doorSizeList !== 0) {
+      handleChangeState(undefined, 4)
+    } else {
+      alert('You need to select door size')
+    }
+  }
+
+  const setDoorValuesFromStore = () => {
+    setDoorCategory(newDoor.doorCategory)
+    setDoorType(newDoor.doorType)
+    setTypeOfOpening(newDoor.typeOfOpening)
+    setDirectionOfOpening(newDoor.directionOfOpening)
+    setHandlePosition(newDoor.handlePosition)
+    setDoorSizeList(newDoor.doorSizeList)
+    setDoorGlass(newDoor.doorGlass)
+    setNumbersOfBars(newDoor.numbersOfBars)
+  }
+
   useEffect( () => {
     getDoors()
     handleApply()
+    if (prevStep > 3) {
+      setDoorValuesFromStore()
+      setDoorSize(newDoor.doorSize)
+    }
   }, []);
 
   useEffect(() => {
@@ -179,14 +214,7 @@ const Step3Doors = (props) => {
   }, [doorCategory, doorType, typeOfOpening, directionOfOpening, handlePosition, doorGlass, numbersOfBars, doors]);
 
   useEffect(() => {
-    if(doorPropertiesFilled()) {
-      handleApply()
-    }
-  }, [doorSize]);
-
-  useEffect(() => {
     dispatch(updateEngineStatesAction(doorCategory === 'hinged' ? "1" : "0", "doorChannelTabSelected"))
-    dispatch(updateEngineStatesAction(doorSize, "selectedDoorSize"))
     handleApply()
   }, [doorSize]);
 
@@ -294,6 +322,13 @@ const Step3Doors = (props) => {
                   })
                 }
               </Radio.Group>
+
+              {
+                doorSizeList && doorSizeList.length === 0 &&
+                  <div>
+                    <p className="color-white">We don't have any doors that match your selected settings.</p>
+                  </div>
+              }
             </div>
           </div>
         </div>
@@ -415,23 +450,9 @@ const Step3Doors = (props) => {
             <button type='submit' onClick={onSkip} className='sucess_button'>Skip</button>
           </div>
           <div className='button'>
-            <button type='submit' onClick={() => {
-              if (isObjEmpty(blueprint3d[0]?.globals?.getGlobal("selectedDoorConfiguration"))) {
-                blueprint3d[0]?.globals?.setGlobal("activePanelIndex", -1)
-                let leftLength = partitionLeftWallLength
-                dispatch(updateEngineStatesAction(Math.ceil(leftLength * perCmEqualToMm / 600), 'numberOfPanels'))
-                dispatch(updateEngineStatesAction(Math.ceil(partitionRightWallLength * perCmEqualToMm / 600), 'numberOfPanelsRight'))
-                blueprint3d[0]?.globals?.getCurrentPrice()
-                handleChangeState(undefined, 5)
-              } else {
-                let leftLength = partitionLeftWallLength
-                dispatch(updateEngineStatesAction(Math.ceil(parseInt(leftLength * perCmEqualToMm) / 600), 'numberOfPanels'))
-                dispatch(updateEngineStatesAction(Math.ceil(partitionRightWallLength * perCmEqualToMm / 600), 'numberOfPanelsRight'))
-                handleChangeState(undefined, 4)
-              }
-            }} className='sucess_button'>Next
+            <button type='submit' onClick={() => { goToNextStep() }} className='sucess_button'>
+              Next
             </button>
-
           </div>
         </div>
       </div>

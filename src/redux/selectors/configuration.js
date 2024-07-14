@@ -34,7 +34,8 @@ export const getMemoizedConfigurationData = createSelector(
       pdfUrl,
       skipThirdStep,
       glassCovering,
-      clientWallWidth
+      clientWallWidth,
+      newDoor
     } = configurationState
 
     return {
@@ -68,7 +69,8 @@ export const getMemoizedConfigurationData = createSelector(
       pdfUrl,
       skipThirdStep,
       glassCovering,
-      clientWallWidth
+      clientWallWidth,
+      newDoor
     }
   }
 )

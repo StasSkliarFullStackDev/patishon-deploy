@@ -32,7 +32,18 @@ const initialState = {
   pdfUrl: null,
   skipThirdStep: false,
   glassCovering: 'clear',
-  clientWallWidth: 0
+  clientWallWidth: 0,
+  newDoor: {
+    doorCategory: null,
+    doorType: null,
+    typeOfOpening: null,
+    directionOfOpening: null,
+    handlePosition: null,
+    doorSize: null,
+    doorSizeList: null,
+    doorGlass: null,
+    numbersOfBars: null
+  }
 };
 
 export default function configurationModule(
