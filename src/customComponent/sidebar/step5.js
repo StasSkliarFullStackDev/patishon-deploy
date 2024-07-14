@@ -12,7 +12,8 @@ const Step5 = (props) => {
 
   const {
     clientWallWidth,
-    skipThirdStep
+    skipThirdStep,
+    newDoor
   } = configuratorData
 
   const {
@@ -39,7 +40,7 @@ const Step5 = (props) => {
 
   useEffect(() => {
     if (!skipThirdStep) {
-      setAddedPanels([{ id: 1, name: 'Door', value: selectedDoorSize }])
+      setAddedPanels([{ id: 1, name: 'Door', value: newDoor.doorSize }])
     }
   }, [skipThirdStep]);
 
@@ -70,8 +71,42 @@ const Step5 = (props) => {
     if (addedPanels[0].name === "Door" || addedPanels[addedPanels.length - 1].name === "Door") {
       alert("Door can not be on the start or on the end of Patishon")
     } else {
-      handleChangeState(undefined, 6)
+      if (newDoor.doorCategory === "sliding") {
+        const { leftDistance, rightDistance } = calcDistanceFromWallToDoor()
+
+        if (newDoor.doorType === "single" && newDoor.directionOfOpening === "left" && leftDistance < newDoor.doorSize) {
+          alert('Not enough space left')
+          return
+        }
+
+        if (newDoor.doorType === "single" && newDoor.directionOfOpening === "right" && rightDistance < newDoor.doorSize) {
+          alert('Not enough space right')
+          return
+        }
+
+        if (newDoor.doorType === "double" && (rightDistance < newDoor.doorSize / 2)) {
+          alert('Not enough space right')
+          return
+        }
+
+        if (newDoor.doorType === "double" && (leftDistance < newDoor.doorSize / 2)) {
+          alert('Not enough space left')
+          return
+        }
+
+        alert("success")
+      }
+      alert('success')
+      // handleChangeState(undefined, 6)
     }
+  }
+
+  const calcDistanceFromWallToDoor = () => {
+    const doorIndex = addedPanels.findIndex(item => item.name === "Door");
+    const leftDistance = addedPanels.slice(0, doorIndex).reduce((sum, item) => sum + item.value, 0);
+    const rightDistance = addedPanels.slice(doorIndex + 1).reduce((sum, item) => sum + item.value, 0);
+
+    return { leftDistance, rightDistance }
   }
 
   useEffect(() => {
@@ -136,6 +171,7 @@ const Step5 = (props) => {
                 <div
                     className={'sortable-item-1__item ' + (item.value ? ('panel--' + item.value + 'mm') : '')}
                     key={item.id}
+                    style={item.name === 'Door' ? { width: newDoor.doorSize * 0.1125 + 'px' } : {}}
                 >
                   <span>{item.name}</span>
 
