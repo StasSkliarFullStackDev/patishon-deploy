@@ -76,8 +76,10 @@ const Step3Doors = (props) => {
         }
       })
 
+      const trueDirection = doorCategory === 'sliding' ? directionOfOpening : (doorType === 'single' ? handlePosition : directionOfOpening)
+
       blueprint3d[0]?.globals?.setGlobal("selectedDoorConfiguration", {
-        hinges: doorCategory,
+        hinges: { category: doorType, direction: trueDirection },
         doorGlass: doorGlass,
         selectedDoorSize: doorSize,
         doorType: doorType,
@@ -138,7 +140,7 @@ const Step3Doors = (props) => {
       return false;
     }
 
-    if ((doorCategory === 'hinged' && doorType === 'single') || (doorCategory === 'sliding' && doorType === 'single')) {
+    if ((doorCategory === 'hinged' && doorType === 'single')) {
       if (!handlePosition) {
         return false;
       }
@@ -154,7 +156,7 @@ const Step3Doors = (props) => {
           (door.doorType === doorType) &&
           (doorCategory === 'hinged' ? (typeOfOpening ? (door.typeOfOpening === typeOfOpening) : true) : true) &&
           ((doorCategory === 'sliding' && doorType === 'single') ? (directionOfOpening ? (door.directionOfOpening === directionOfOpening) : true) : true) &&
-          (((doorCategory === 'hinged' && doorType === 'single') || (doorCategory === 'sliding' && doorType === 'single')) ? (handlePosition ?( door.handlePosition === handlePosition) : true) : true)
+          ((doorCategory === 'hinged' && doorType === 'single') ? (handlePosition ? (door.handlePosition === handlePosition) : true) : true)
       );
     })
 
@@ -172,10 +174,9 @@ const Step3Doors = (props) => {
       calcDoorSizeList()
       handleApply()
     }
-  }, [doorCategory, doorType, typeOfOpening, directionOfOpening, handlePosition]);
+  }, [doorCategory, doorType, typeOfOpening, directionOfOpening, handlePosition, doorGlass, numbersOfBars]);
 
   useEffect(() => {
-    console.log(doorSize)
     dispatch(updateEngineStatesAction(doorCategory === 'hinged' ? "1" : "0", "doorChannelTabSelected"))
     dispatch(updateEngineStatesAction(doorSize, "selectedDoorSize"))
     handleApply()
@@ -251,7 +252,7 @@ const Step3Doors = (props) => {
             }
 
             {
-                ((doorCategory === 'hinged' && doorType === 'single') || (doorCategory === 'sliding' && doorType === 'single')) &&
+                (doorCategory === 'hinged' && doorType === 'single') &&
                 <div>
                   <h4 className="single door_p door_point">Handle position</h4>
                   <Radio.Group onChange={(e) => setHandlePosition(e.target.value)} value={handlePosition}>
