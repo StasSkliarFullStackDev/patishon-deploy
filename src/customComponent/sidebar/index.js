@@ -58,7 +58,8 @@ const Rightsiderbar = (props) => {
     panelPricePerMm,
     doorHandles,
     films,
-    totalPrice
+    totalPrice,
+    clientWallWidth
   } = configuratorData
   const {
     stepValue,
@@ -311,7 +312,7 @@ const Rightsiderbar = (props) => {
 
     <div
         className={`rightsiderbar rightsiderbarWithConfirmPop ${sidebarCollapsed ? 'hide_slide-left' : 'show_slide-left'} ${(step !== 4 && step !== 5) && 'extra_spacing'}`}
-        style={{ width: (step === 5 ? "900px" : "391px") }}
+        style={{ width: (step === 5 ? (clientWallWidth * 0.1125 + 100 + 'px') : "391px"), minWidth: 400 }}
     >
       <FontAwesomeIcon
         style={{ cursor: 'pointer' }}

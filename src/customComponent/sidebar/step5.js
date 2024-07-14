@@ -3,26 +3,18 @@ import {useDispatch, useSelector} from "react-redux";
 import {getMemoizedConfigurationData} from "../../redux/selectors/configuration";
 import "./step5.css";
 import {ReactSortable} from "react-sortablejs";
-import {getMemoizedBlueprint3dData} from "../../redux/selectors/blueprint3d";
+import {updateConfigurationStates} from "../../redux/actions/configuration";
 
 const Step5 = (props) => {
   const configuratorData = useSelector(getMemoizedConfigurationData)
-  const blueprint3dDataData = useSelector(getMemoizedBlueprint3dData)
   const dispatch = useDispatch()
 
   const {
     clientWallWidth,
     skipThirdStep,
-    newDoor
+    newDoor,
+    newPanels
   } = configuratorData
-
-  const {
-    selectedDoorSize
-  } = blueprint3dDataData
-
-  const {
-    handleChangeState,
-  } = props
 
 
   const [maximumWidth, setMaximumWidth] = useState(clientWallWidth)
@@ -111,12 +103,21 @@ const Step5 = (props) => {
 
   useEffect(() => {
     setCurrentWidth(calcCurrentWidth())
+    dispatch(updateConfigurationStates([...addedPanels], 'newPanels'))
   }, [addedPanels]);
+
+  useEffect(() => {
+    if (newPanels && newPanels.length > 0) {
+      setAddedPanels([...newPanels]);
+    } else {
+      setCurrentWidth(newDoor.doorSize)
+    }
+  }, []);
 
   return (
       <div className='step4 step4WithPrice'>
         <div className='dimensions-data'>
-          <div class="label_container_For_customization custom_centered_aligned">
+          <div className="label_container_For_customization custom_centered_aligned">
             <h3>Panels</h3>
             <h3>(In progress)</h3>
           </div>

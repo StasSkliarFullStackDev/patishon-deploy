@@ -43,7 +43,8 @@ const initialState = {
     doorSizeList: null,
     doorGlass: null,
     numbersOfBars: null
-  }
+  },
+  newPanels: []
 };
 
 export default function configurationModule(
