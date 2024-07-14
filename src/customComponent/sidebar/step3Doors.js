@@ -14,11 +14,8 @@ import { updateConfigurationStates } from "../../redux/actions/configuration";
 import axios from "axios";
 import {LOCAL_SERVER} from "../../constant";
 
-const { TabPane } = Tabs;
-
 const Step3Doors = (props) => {
   const dispatch = useDispatch()
-  let glassPrice = 0
 
   const {
     handleChangeState,
@@ -29,83 +26,32 @@ const Step3Doors = (props) => {
   const reducerBluePrint = useSelector(getMemoizedBlueprint3dData)
   const configurationData = useSelector(getMemoizedConfigurationData)
   const {
-    doorChannelTabSelected,
-    selectedDoorSize,
     BP3DData,
     perCmEqualToMm,
   } = reducerBluePrint
   const {
-    doorChannels,
-    doorHinges,
-    partitionWallLength,
     doorHandles,
     partitionLeftWallLength,
     partitionRightWallLength,
-    hingeLoader,
     step3HandleApply,
     roomHeight,
-    totalPrice,
-    panelPricePerMm,
     skipThirdStep
   } = configurationData
 
   let reducerData = blueprint3d[0]?.globals?.getGlobal("selectedDoorConfiguration")
   const [doorGlass, setDoorGlass] = React.useState(reducerData.doorGlass ? reducerData.doorGlass : 0)
-  const [frameType, setframeType] = React.useState({ category: reducerData.hinges?.category || "push", direction: reducerData.hinges?.direction || "right" })
-  const [errorMsg, setErrorMsg] = React.useState(false)
-  const [loaderHinge, setLoaderHinge] = React.useState(false)
   const [numbersOfBars, setNumbersOfBars] = React.useState(reducerData.horizontalBarForDoor || 1)
 
   const formatter = (value) => `${value}`;
 
-  let selectedCategoryHinges = doorHinges.find((eachCategory) => eachCategory.category == frameType.category)
-
   const handleOnChange = (value) => {
     setNumbersOfBars(value)
   }
-  const handleChangeCategory = (e) => {
-    setframeType(data => ({ ...data, category: e.target.value }))
-  }
-  const handleChangedoorChannelTab = (e) => {
-    dispatch(updateEngineStatesAction(e.target.value, "doorChannelTabSelected"))
-    setErrorMsg(false)
-    if (e.target.value == "1") {
-      dispatch(updateEngineStatesAction(768, "selectedDoorSize"))
-    } else {
-      dispatch(updateEngineStatesAction(1488, "selectedDoorSize"))
-    }
-      
-  }
-  const handleChangeDirection = (e) => {
-    setframeType(data => ({ ...data, direction: e.target.value }))
-    //blueprint3d[0]?.globals?.setGlobal("selectedDoorConfiguration",{hinges:frameType,doorGlass:doorGlass,selectedDoorSize:selectedDoorSize, doorType: (doorChannelTabSelected == 1 ? "single" : "double")})
 
-  }
-  const handeDoorType = (eachDoorSize) => {
-    if (eachDoorSize.isActivated) {
-      setErrorMsg(false)
-      dispatch(updateEngineStatesAction(eachDoorSize.size, "selectedDoorSize"))
-    }
+  const handleMetalGlazing = (key) => {
+    setDoorGlass(key)
   }
 
-  useEffect(() => {
-
-    setTimeout(() => {
-      // console.log("this is hinge loader = ", hingeLoader, doorChannelTabSelected, selectedDoorSize)
-      if (hingeLoader) {
-        dispatch(updateConfigurationStates(true, 'step3HandleApply'))
-      } else {
-        if (doorChannelTabSelected == 1 && (selectedDoorSize == 768)) {
-          handleApply()
-        } else if (doorChannelTabSelected == 2 && (selectedDoorSize == 1488)) {
-          handleApply()
-        } else {
-          executeScroll()
-        }
-      }
-    }, 0)
-
-  }, [selectedDoorSize, frameType, numbersOfBars, doorGlass])
   const onSkip = () => {
     if (isInternetConnected) {
       blueprint3d[0]?.globals?.setGlobal("selectedDoorConfiguration", {})
@@ -120,36 +66,27 @@ const Step3Doors = (props) => {
       handleChangeState(undefined, 5)
     }
   }
-  const handleApply = () => {
-    // dispatch(updateConfigurationStates(false, 'step3HandleApply'))
-    if (isInternetConnected) {
-      if ((BP3D.Core.Dimensioning.cmToMeasure(partitionWallLength) - BP3D.Core.Dimensioning.cmToMeasure(11.453*2)) < selectedDoorSize) {
-        toast.notify("Please select the wall length according to door size.", {
-          duration: 5,
-          type: "error",
-        })
-      } else {
-        let defaultHandleIndex = 0
-        doorHandles.map((e, i) => {
-          if (e.isDefault) {
-            defaultHandleIndex = i
-          }
-        })
 
-        // console.log("this is hinge loader = ", frameType, "doorGlass = ", doorGlass, "selectedDoorSize = ", selectedDoorSize, "defaultHandleIndex = ", defaultHandleIndex, "numbersOfBars = ", numbersOfBars)
-        console.log("DATATATAT", blueprint3d[0]?.floorplanner?.floorplan?.walls[4].start, blueprint3d[0]?.floorplanner?.floorplan?.walls[4].end)
-        blueprint3d[0]?.globals?.setGlobal("selectedDoorConfiguration", { hinges: frameType, doorGlass: doorGlass, selectedDoorSize: selectedDoorSize, doorType: (doorChannelTabSelected == 1 ? "single" : "double"), selectedHandle: defaultHandleIndex, horizontalBarForDoor: numbersOfBars })
-        reducerBluePrint?.BP3DData.model.floorplan.update()
-        blueprint3d[0]?.globals?.getCurrentPrice()
-        //document.getElementsByClassName("disable_icon")[0]?.classList.remove("disable_icon")
-      }
+  const handleApply = () => {
+    if (isInternetConnected) {
+      let defaultHandleIndex = 0
+      doorHandles.map((e, i) => {
+        if (e.isDefault) {
+          defaultHandleIndex = i
+        }
+      })
+
+      blueprint3d[0]?.globals?.setGlobal("selectedDoorConfiguration", {
+        hinges: doorCategory,
+        doorGlass: doorGlass,
+        selectedDoorSize: doorSize,
+        doorType: doorType,
+        selectedHandle: defaultHandleIndex,
+        horizontalBarForDoor: numbersOfBars
+      })
+      reducerBluePrint?.BP3DData.model.floorplan.update()
       dollyInZoom(BP3DData)
     }
-  }
-  const handleMetalGlazing = (key) => {
-    setDoorGlass(key)
-    //blueprint3d[0]?.globals?.setGlobal("selectedDoorConfiguration",{hinges:frameType,doorGlass:key,selectedDoorSize:selectedDoorSize, doorType: (doorChannelTabSelected == 1 ? "single" : "double")})
-
   }
 
   useEffect(() => {
@@ -159,59 +96,11 @@ const Step3Doors = (props) => {
   }, [])
 
   useEffect(() => {
-    if (prevStep > 3 && !isObjEmpty(blueprint3d[0]?.globals?.getGlobal("selectedDoorConfiguration"))) {
-      let defaultHandleIndex = 0
-      doorHandles.map((e, i) => {
-        if (e.isDefault) {
-          defaultHandleIndex = i
-        }
-      })
-      blueprint3d[0]?.globals?.setGlobal("selectedDoorConfiguration", {
-        ...blueprint3d[0]?.globals?.getGlobal("selectedDoorConfiguration"),
-        selectedHandle: defaultHandleIndex
-      })
-    }
-    for (let i = 0; i < doorHinges.length; i++) {
-      if (doorHinges[i].category == "push" && !doorHinges[i].isEnabled) {
-        setframeType(state => ({ ...state, category: "pull" }))
-      }
-    }
-    dollyInZoom(BP3DData)
-    // blueprint3d[0]?.globals?.setGlobal("selectedHandle",0)
-  }, [])
-
-  const getPrice = (eachDoorSize) => {
-    if (eachDoorSize.size == selectedDoorSize) {
-      glassPrice = eachDoorSize.price
-    }
-  }
-
-  useEffect(() => {
-    selectedCategoryHinges = doorHinges.find((eachCategory) => eachCategory.category == frameType.category)
-    for (let e of selectedCategoryHinges.doorHinges) {
-      if (e.type == "left" && e.isActivated) {
-        setframeType(state => ({ ...state, direction: reducerData.hinges?.direction || "left" }))
-        break
-      } else if (e.type == "right" && e.isActivated) {
-        setframeType(state => ({ ...state, direction: reducerData.hinges?.direction || "right" }))
-        break
-      }
-    }
-    blueprint3d[0]?.globals?.getCurrentPrice()
-
-  }, [frameType.category])
-
-  useEffect(() => {
-    if (step3HandleApply && !hingeLoader) {
+    if (step3HandleApply) {
       handleApply()
     }
-  }, [step3HandleApply, hingeLoader])
+  }, [step3HandleApply])
 
-  const executeScroll = () => {
-    setErrorMsg(true)
-    const element = document.getElementById("sizes_" + doorChannelTabSelected);
-    element.scrollIntoView({ block: 'start', behavior: 'smooth' });
-  }
   useEffect(() => {
     if (skipThirdStep && prevStep === 2) {
       onSkip()
@@ -275,11 +164,22 @@ const Step3Doors = (props) => {
 
   useEffect(() => {
     getDoors()
+    handleApply()
   }, []);
 
   useEffect(() => {
-    if(doorPropertiesFilled()) calcDoorSizeList()
+    if(doorPropertiesFilled()) {
+      calcDoorSizeList()
+      handleApply()
+    }
   }, [doorCategory, doorType, typeOfOpening, directionOfOpening, handlePosition]);
+
+  useEffect(() => {
+    console.log(doorSize)
+    dispatch(updateEngineStatesAction(doorCategory === 'hinged' ? "1" : "0", "doorChannelTabSelected"))
+    dispatch(updateEngineStatesAction(doorSize, "selectedDoorSize"))
+    handleApply()
+  }, [doorSize]);
 
   return (
       <div className='step4 custom_height'>
