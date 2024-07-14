@@ -162,9 +162,11 @@ const Step3Doors = (props) => {
 
     const newDoorSizeList = filteredDoors.map(item => item.doorSize)
     setDoorSizeList([...newDoorSizeList])
+
+    setDoorSize(newDoorSizeList[0] || 0)
   }
 
-  useEffect(() => {
+  useEffect( () => {
     getDoors()
     handleApply()
   }, []);
@@ -174,7 +176,13 @@ const Step3Doors = (props) => {
       calcDoorSizeList()
       handleApply()
     }
-  }, [doorCategory, doorType, typeOfOpening, directionOfOpening, handlePosition, doorGlass, numbersOfBars]);
+  }, [doorCategory, doorType, typeOfOpening, directionOfOpening, handlePosition, doorGlass, numbersOfBars, doors]);
+
+  useEffect(() => {
+    if(doorPropertiesFilled()) {
+      handleApply()
+    }
+  }, [doorSize]);
 
   useEffect(() => {
     dispatch(updateEngineStatesAction(doorCategory === 'hinged' ? "1" : "0", "doorChannelTabSelected"))
