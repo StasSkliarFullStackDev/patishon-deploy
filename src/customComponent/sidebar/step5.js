@@ -16,6 +16,9 @@ const Step5 = (props) => {
     newPanels
   } = configuratorData
 
+  const {
+    handleChangeState,
+  } = props
 
   const [maximumWidth, setMaximumWidth] = useState(clientWallWidth)
   const [currentWidth, setCurrentWidth] = useState(0)
@@ -87,6 +90,7 @@ const Step5 = (props) => {
         }
 
         alert("success")
+        handleChangeState(undefined, 6)
       }
       alert('success')
       handleChangeState(undefined, 6)
