@@ -89,10 +89,8 @@ const Step5 = (props) => {
           return
         }
 
-        alert("success")
         handleChangeState(undefined, 6)
       }
-      alert('success')
       handleChangeState(undefined, 6)
     }
   }

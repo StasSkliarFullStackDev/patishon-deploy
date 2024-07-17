@@ -42,7 +42,9 @@ const Step8 = (props) => {
     roomLength,
     roomBreath,
     glassCovering,
-    numberOfhorizontalFrames
+    numberOfhorizontalFrames,
+    newDoor,
+    newPanels
   } = configuratorData;
   const {
     // selectedDoorSize,
@@ -79,6 +81,8 @@ const Step8 = (props) => {
           : "Fixed to one wall";
 
     allData["glassCovering"] = glassCovering;
+    allData["newDoor"] = newDoor;
+    allData["newPanels"] = newPanels;
     allData["wallLength"] =
       +BP3D.Core.Dimensioning.cmToMeasure(partitionWallLength) ?? 0;
     allData["wallHeight"] = roomHeight;

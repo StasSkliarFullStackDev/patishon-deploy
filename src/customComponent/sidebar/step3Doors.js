@@ -89,6 +89,8 @@ const Step3Doors = (props) => {
       reducerBluePrint?.BP3DData.model.floorplan.update()
       dollyInZoom(BP3DData)
 
+      const selectedDoor = doors.find(item => (item.doorCategory === doorCategory && item.doorType === doorType && item.doorSize === doorSize))
+
       dispatch(updateConfigurationStates({
         doorCategory,
         doorType,
@@ -98,7 +100,8 @@ const Step3Doors = (props) => {
         doorSize,
         doorSizeList,
         doorGlass,
-        numbersOfBars
+        numbersOfBars,
+        doorPrice: selectedDoor?.doorPrice || 0
       }, 'newDoor'))
     }
   }
@@ -128,6 +131,7 @@ const Step3Doors = (props) => {
   const [directionOfOpening, setDirectionOfOpening] = React.useState('left');
   const [handlePosition, setHandlePosition] = React.useState('left');
   const [doorSize, setDoorSize] = React.useState('100');
+  const [doorPrice, setDoorPrice] = React.useState(0);
   const [doorSizeList, setDoorSizeList] = React.useState();
 
   const getDoors = async () => {
