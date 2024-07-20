@@ -4,9 +4,15 @@ import {getMemoizedConfigurationData} from "../../redux/selectors/configuration"
 import "./step5.css";
 import {ReactSortable} from "react-sortablejs";
 import {updateConfigurationStates} from "../../redux/actions/configuration";
+import {updateEngineStatesAction} from "../../redux/actions/blueprint3d";
+import {BP3D} from "../../common/blueprint3d";
+import {dollyInZoom, isInternetConnected} from "../../common/utils";
+import {getMemoizedBlueprint3dData} from "../../redux/selectors/blueprint3d";
+import {setdollyInCount} from "../../hoc/mainLayout";
 
 const Step5 = (props) => {
   const configuratorData = useSelector(getMemoizedConfigurationData)
+  const reducerBluePrint = useSelector(getMemoizedBlueprint3dData)
   const dispatch = useDispatch()
 
   const {
@@ -18,7 +24,17 @@ const Step5 = (props) => {
 
   const {
     handleChangeState,
+    blueprint3d
   } = props
+
+  const {
+    perCmEqualToMm,
+    numberOfPanels,
+    numberOfPanelsRight,
+    BP3DData,
+    selectedPanelSize,
+    selectedPanelSizeRight
+  } = reducerBluePrint
 
   const [maximumWidth, setMaximumWidth] = useState(clientWallWidth)
   const [currentWidth, setCurrentWidth] = useState(0)
@@ -115,6 +131,19 @@ const Step5 = (props) => {
       setCurrentWidth(newDoor.doorSize)
     }
   }, []);
+
+  const handleApply = () => {
+    if (isInternetConnected()) {
+      blueprint3d[0]?.globals?.setGlobal("numberOfPanelsRight", 4)
+      reducerBluePrint?.BP3DData.model.floorplan.update()
+      BP3DData.three.controls.update();
+    }
+  }
+
+  useEffect(() => {
+    handleApply()
+    dispatch(updateConfigurationStates(false, 'skipThirdStep'))
+  }, [])
 
   return (
       <div className='step4 step4WithPrice'>

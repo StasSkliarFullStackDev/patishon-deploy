@@ -15,8 +15,7 @@ const logger = createLogger({
 const sagaMiddleware = createSagaMiddleware()
 
 const createStoreWithMiddleware = applyMiddleware(
-    sagaMiddleware,
-    logger
+    sagaMiddleware
 )(createStore)
 
 const store = createStoreWithMiddleware(rootReducer)
