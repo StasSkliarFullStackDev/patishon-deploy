@@ -83,7 +83,7 @@ const Step7 = (props) => {
       {/*  </div>*/}
       {/*</div>*/}
       <h3 className="panel_price mt-45">Looking great! Preview your finished Pātishon, then you can checkout.</h3>
-      <div className="target-data-button-i">
+      <div className="target-data-button-i justify-center gap-2">
         <div className='button'>
           <button type='submit' onClick={() => {
             handleChangeState(undefined, 8)

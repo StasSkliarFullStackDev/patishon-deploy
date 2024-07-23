@@ -333,10 +333,15 @@ canvas {
 }
 
 .step-indicator {
-  margin-top: 26px;
+  margin: 26px auto 0 auto;
+  max-width: 400px;
   display: flex;
   align-items: center;
   padding-bottom: 10px;
+}
+
+.position-relative {
+  position: relative;
 }
 
 .step {
@@ -448,6 +453,22 @@ canvas {
   display: flex;
   align-items: center;
   color: #ffffff;
+}
+
+.overflow-hidden {
+  overflow: hidden;
+}
+
+.justify-center {
+  justify-content: center;
+}
+
+.gap-2 {
+  gap: 2rem;
+}
+
+.my-2 {
+  margin: 2rem 0 !important;
 }
 
 .first-silder h3 {

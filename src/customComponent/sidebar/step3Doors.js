@@ -40,7 +40,7 @@ const Step3Doors = (props) => {
 
   let reducerData = blueprint3d[0]?.globals?.getGlobal("selectedDoorConfiguration")
   const [doorGlass, setDoorGlass] = React.useState(reducerData.doorGlass ? reducerData.doorGlass : 0)
-  const [numbersOfBars, setNumbersOfBars] = React.useState(reducerData.horizontalBarForDoor || 1)
+  const [numbersOfBars, setNumbersOfBars] = React.useState(0)
 
   const formatter = (value) => `${value}`;
 
@@ -123,6 +123,12 @@ const Step3Doors = (props) => {
       onSkip()
     }
   }, [skipThirdStep])
+
+  useEffect(() => {
+    if (doorGlass === 1) {
+      setNumbersOfBars(1)
+    }
+  }, [doorGlass]);
 
   const [doors, setDoors] = React.useState([])
   const [doorCategory, setDoorCategory] = React.useState('hinged');

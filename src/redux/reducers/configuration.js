@@ -44,7 +44,12 @@ const initialState = {
     doorGlass: null,
     numbersOfBars: null
   },
-  newPanels: []
+  newPanels: [],
+  newImage: null,
+  newImageWidth: null,
+  newImageHeight: null,
+  stepMoreThan3: false,
+  toggle3dView: false
 };
 
 export default function configurationModule(

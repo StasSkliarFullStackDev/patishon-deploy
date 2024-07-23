@@ -44,7 +44,10 @@ const Step8 = (props) => {
     glassCovering,
     numberOfhorizontalFrames,
     newDoor,
-    newPanels
+    newPanels,
+    newImage,
+    newImageWidth,
+    newImageHeight
   } = configuratorData;
   const {
     // selectedDoorSize,
@@ -131,6 +134,9 @@ const Step8 = (props) => {
             : horizontalBars,
       },
     };
+    allData["newImage"] = newImage;
+    allData["newImageWidth"] = newImageWidth;
+    allData["newImageHeight"] = newImageHeight;
     allData["roomSize"] = {
       length: Math.floor(roomLength * perCmEqualToMm),
       width: Math.floor(roomBreath * perCmEqualToMm),
@@ -242,7 +248,7 @@ const Step8 = (props) => {
           }} />
         </div> */}
         {
-          <div className="chart center">
+          <div className="chart center my-2">
             <div
               className="cart"
               onClick={() => {
@@ -257,7 +263,7 @@ const Step8 = (props) => {
                 }
                 // navigate('/payment')
               }}>
-              <img src={ThemeImages.cart} alt="cart" />
+              <img style={{ maxWidth: 100 }} src={ThemeImages.cart} alt="cart" />
             </div>
             <p>Add to cart</p>
           </div>

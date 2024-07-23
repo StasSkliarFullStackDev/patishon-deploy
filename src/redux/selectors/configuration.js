@@ -36,7 +36,12 @@ export const getMemoizedConfigurationData = createSelector(
       glassCovering,
       clientWallWidth,
       newDoor,
-      newPanels
+      newPanels,
+      newImage,
+      newImageWidth,
+      newImageHeight,
+      stepMoreThan3,
+      toggle3dView
     } = configurationState
 
     return {
@@ -72,7 +77,12 @@ export const getMemoizedConfigurationData = createSelector(
       glassCovering,
       clientWallWidth,
       newDoor,
-      newPanels
+      newPanels,
+      newImage,
+      newImageWidth,
+      newImageHeight,
+      stepMoreThan3,
+      toggle3dView
     }
   }
 )

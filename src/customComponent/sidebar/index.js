@@ -45,7 +45,7 @@ const Rightsiderbar = (props) => {
     configuration2D,
     numberOfPanels,
     importedModels,
-    infoPopUp
+    infoPopUp,
   } = reducerBluePrint
   const {
     partitionType
@@ -312,15 +312,18 @@ const Rightsiderbar = (props) => {
 
     <div
         className={`rightsiderbar rightsiderbarWithConfirmPop ${sidebarCollapsed ? 'hide_slide-left' : 'show_slide-left'} ${(step !== 4 && step !== 5) && 'extra_spacing'}`}
-        style={{ width: (step === 5 ? (clientWallWidth * 0.1125 + 100 + 'px') : "391px"), minWidth: 400 }}
+        style={{ width: (step > 4 && selectedType !== '3D') ? '100%' : "391px", minWidth: 400 }}
     >
-      <FontAwesomeIcon
-        style={{ cursor: 'pointer' }}
-        icon={faXmark}
-        onClick={() => {
-          dispatch(updateEngineStatesAction(true, 'sidebarCollapsed'))
-        }}
-      />
+      {
+          step < 4 &&
+          <FontAwesomeIcon
+              style={{ cursor: 'pointer' }}
+              icon={faXmark}
+              onClick={() => {
+                dispatch(updateEngineStatesAction(true, 'sidebarCollapsed'))
+              }}
+          />
+      }
       {selectedType === '2D' ?
         <>
           {step < 8 && <section class="step-indicator">

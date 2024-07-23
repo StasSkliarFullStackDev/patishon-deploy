@@ -7,15 +7,16 @@ import rootSaga from './saga'
 
 
 const logger = createLogger({
-    duration: true,
-    timestamp: true,
+    duration: false,
+    timestamp: false,
     // diff: true,
 })
 
 const sagaMiddleware = createSagaMiddleware()
 
 const createStoreWithMiddleware = applyMiddleware(
-    sagaMiddleware
+    sagaMiddleware,
+    logger
 )(createStore)
 
 const store = createStoreWithMiddleware(rootReducer)

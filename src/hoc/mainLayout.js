@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, {useState, useEffect, useLayoutEffect} from 'react';
 import { Outlet } from 'react-router';
 import { useLocation, useNavigate } from 'react-router-dom'
 import $ from 'jquery'
@@ -38,6 +38,12 @@ const MainLayout = () => {
     roomSizeSuccess
   } = reducerConfigurator
 
+  const configuratorData = useSelector(getMemoizedConfigurationData)
+  const {
+    toggle3dView,
+    newPanels
+  } = configuratorData
+
   let currentStateName = "Design";
   const setCurrentStatesName = (newState) => { return currentStateName = newState }
   const [setCurrentStateOfSideMenu, functionSetCurrentStateOfSideMenu] = useState(null)
@@ -73,6 +79,7 @@ const MainLayout = () => {
       navigate('/')
     }
   }, [reducerBlueprint?.configurationStep])
+
 
   const structureForPartition = () => {
     switch (partitonType) {
@@ -764,6 +771,12 @@ const MainLayout = () => {
     return setCurrentStateOfSide
   }
 
+
+  useEffect(() => {
+    if (newPanels.length > 0) {
+      $("#update-floorplan, #update-floorplan2").click();
+    }
+  }, [configuratorData.toggle3dView]);
 
   return (
     <ViewTypeContext.Provider value={[blueprint3d, setBlueprint3d]}>

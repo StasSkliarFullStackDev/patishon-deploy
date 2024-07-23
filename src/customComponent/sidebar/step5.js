@@ -4,11 +4,8 @@ import {getMemoizedConfigurationData} from "../../redux/selectors/configuration"
 import "./step5.css";
 import {ReactSortable} from "react-sortablejs";
 import {updateConfigurationStates} from "../../redux/actions/configuration";
-import {updateEngineStatesAction} from "../../redux/actions/blueprint3d";
-import {BP3D} from "../../common/blueprint3d";
-import {dollyInZoom, isInternetConnected} from "../../common/utils";
+import {isInternetConnected} from "../../common/utils";
 import {getMemoizedBlueprint3dData} from "../../redux/selectors/blueprint3d";
-import {setdollyInCount} from "../../hoc/mainLayout";
 
 const Step5 = (props) => {
   const configuratorData = useSelector(getMemoizedConfigurationData)
@@ -19,7 +16,8 @@ const Step5 = (props) => {
     clientWallWidth,
     skipThirdStep,
     newDoor,
-    newPanels
+    newPanels,
+    roomHeight
   } = configuratorData
 
   const {
@@ -28,12 +26,7 @@ const Step5 = (props) => {
   } = props
 
   const {
-    perCmEqualToMm,
-    numberOfPanels,
-    numberOfPanelsRight,
     BP3DData,
-    selectedPanelSize,
-    selectedPanelSizeRight
   } = reducerBluePrint
 
   const [maximumWidth, setMaximumWidth] = useState(clientWallWidth)
@@ -78,7 +71,7 @@ const Step5 = (props) => {
     }
   }
 
-  const onApplyChanges = () => {
+  const onApplyChanges = async () => {
     if (addedPanels[0].name === "Door" || addedPanels[addedPanels.length - 1].name === "Door") {
       alert("Door can not be on the start or on the end of Patishon")
     } else {
@@ -143,14 +136,18 @@ const Step5 = (props) => {
   useEffect(() => {
     handleApply()
     dispatch(updateConfigurationStates(false, 'skipThirdStep'))
+    dispatch(updateConfigurationStates(true, 'stepMoreThan3'))
   }, [])
 
+  const getCssCoefficient = () => {
+    return maximumWidth < 5500 ? 0.21 : 0.14
+  }
+
   return (
-      <div className='step4 step4WithPrice'>
+      <div className='step4 step4WithPrice content-center'>
         <div className='dimensions-data'>
           <div className="label_container_For_customization custom_centered_aligned">
             <h3>Panels</h3>
-            <h3>(In progress)</h3>
           </div>
         </div>
 
@@ -169,60 +166,76 @@ const Step5 = (props) => {
           >
             {items.map((item, index) => (
                 <div
-                    className={'sortable-item-1__item ' + ('panel--' + item.value + 'mm')}
+                    className='sortable-item-1__item'
                     key={item.id}
+                    style={{width: item.value * getCssCoefficient() + 'px'}}
                 >
                   {item.name}
                 </div>
             ))}
           </ReactSortable>
 
-          <div
-              className="top-decor-line"
-              style={{width: clientWallWidth * 0.1125 + 10 + 'px'}}
-          >
-            <div className="top-decor-line__text">
-              {clientWallWidth} mm
+          <div className="position-relative">
+            <div
+                className="top-decor-line"
+                style={{width: clientWallWidth * getCssCoefficient() + 10 + 'px'}}
+            >
+              <div className="top-decor-line__text">
+                {clientWallWidth} mm
+              </div>
+            </div>
+
+            <div className="position-relative">
+              <ReactSortable
+                  tag='div'
+                  className={panelDragged ? 'patishon-container-scroll patishon-container-scroll--active' : 'patishon-container-scroll'}
+                  list={addedPanels}
+                  setList={(newState) => onSetSortableList(newState)}
+                  group={{name: 'shared', pull: 'clone', put: true}}
+                  clone={cloneFunction}
+                  animation={400}
+                  swap={true}
+                  delayOnTouchStart={true}
+                  delay={2}
+                  style={{width: clientWallWidth * getCssCoefficient() + 10 + 'px'}}
+              >
+                {addedPanels.map((item, index) => (
+                    <div
+                        className='sortable-item-1__item'
+                        key={item.id}
+                        style={item.name === 'Door' ? {
+                          width: newDoor.doorSize * getCssCoefficient() + 'px',
+                          borderWidth: 5,
+                          zIndex: 100
+                        } : {
+                          width: item.value * getCssCoefficient() + 'px',
+                        }}
+                    >
+                      <span>{item.name}</span>
+
+                      {item.name !== 'Door'
+                          ? <div
+                              onClick={() => removeSortableItem(item.id, setAddedPanels)}
+                              className="remove-item-icon"
+                          >
+                            ×
+                          </div>
+                          : ''
+                      }
+                    </div>
+                ))}
+              </ReactSortable>
+              <div className="reight-decor-line">
+                <div className="reight-decor-line__text">
+                  {roomHeight} mm
+                </div>
+              </div>
             </div>
           </div>
-
-          <ReactSortable
-              tag='div'
-              className={panelDragged ? 'patishon-container-scroll patishon-container-scroll--active' : 'patishon-container-scroll'}
-              list={addedPanels}
-              setList={(newState) => onSetSortableList(newState)}
-              group={{name: 'shared', pull: 'clone', put: true}}
-              clone={cloneFunction}
-              animation={400}
-              swap={true}
-              delayOnTouchStart={true}
-              delay={2}
-              style={{width: clientWallWidth * 0.1125 + 10 + 'px'}}
-          >
-            {addedPanels.map((item, index) => (
-                <div
-                    className={'sortable-item-1__item ' + (item.value ? ('panel--' + item.value + 'mm') : '')}
-                    key={item.id}
-                    style={item.name === 'Door' ? { width: newDoor.doorSize * 0.1125 + 'px' } : {}}
-                >
-                  <span>{item.name}</span>
-
-                  {item.name !== 'Door'
-                      ? <div
-                          onClick={() => removeSortableItem(item.id, setAddedPanels)}
-                          className="remove-item-icon"
-                      >
-                        ×
-                      </div>
-                      : ''
-                  }
-                </div>
-            ))}
-          </ReactSortable>
         </div>
 
         <span className='width-label'>Your Room Width: {maximumWidth}mm</span>
-        <span className='width-label'>Your Patishon Width: {currentWidth}mm</span>
+        <span className='width-label'>Your Panels Width: {currentWidth}mm</span>
         <span className='width-label'>Remain: {maximumWidth - currentWidth}mm</span>
 
         <div className="floating-text special_case" style={{display: 'block'}}>

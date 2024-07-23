@@ -5,6 +5,7 @@ import ThemeImages from "../../themes/appImage";
 import { ViewTypeContext } from '../../hoc/mainLayout'
 import { getMemoizedBlueprint3dData } from "../../redux/selectors/blueprint3d"
 import { updateEngineStatesAction } from "../../redux/actions/blueprint3d"
+import {getMemoizedConfigurationData} from "../../redux/selectors/configuration";
 
 
 
@@ -18,6 +19,12 @@ const Breadcrumbs = () => {
     } = reducerBluePrint
     const [x, y, z] = useOutletContext();
 
+    const configuratorData = useSelector(getMemoizedConfigurationData)
+    const {
+        step,
+        stepMoreThan3
+    } = configuratorData
+
 
     const viewTypeContext = React.useContext(ViewTypeContext);
 
@@ -27,22 +34,23 @@ const Breadcrumbs = () => {
                 <div className="heading_data">
                     <h3 className="heading_switch">Switch To</h3>
                     <div className="button_switch">
-                      <img
+                        <img
                             id="floorplan_tab"
                             // className="floorplan_tab"
-                            src={selectedType === '2D' ? ThemeImages.logo2 : ThemeImages.blur2d}
+                            src={selectedType === '2D' && !stepMoreThan3 ? ThemeImages.logo2 : ThemeImages.blur2d}
                             style={{display: configurationStep > 2 ? "none" : 'initial'}}
                             onClick={() => {
 
                                 dispatch(updateEngineStatesAction('2D', 'selectedType'))
                                 // viewTypeContext[1]('2D')
                             }}
-                        /> 
+                        />
+
                         <img
                             id="design_2d_tab"
                             style={{display: configurationStep < 3 ? "none" : 'initial'}}
                             // className="floorplan_tab"
-                            src={selectedType === '2D' ? ThemeImages.logo2 : ThemeImages.blur2d}
+                            src={selectedType === '2D' && !stepMoreThan3 ? ThemeImages.logo2 : ThemeImages.blur2d}
                             onClick={() => {
 
                                 dispatch(updateEngineStatesAction('2D', 'selectedType'))
@@ -66,7 +74,6 @@ const Breadcrumbs = () => {
             </div>
         </div>
     )
-
 
 
 }

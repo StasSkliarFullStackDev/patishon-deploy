@@ -1,14 +1,17 @@
-import React, { useEffect, useLayoutEffect, useState } from "react"
-import { useDispatch, useSelector } from "react-redux";
-import { Slider, Tooltip } from 'antd';
+import React, {useEffect, useLayoutEffect, useState} from "react"
+import {useDispatch, useSelector} from "react-redux";
+import {Slider, Tooltip} from 'antd';
 
 import ThemeImages from "../../themes/appImage";
-import { updateConfigurationStates } from "../../redux/actions/configuration"
-import { getMemoizedConfigurationData } from "../../redux/selectors/configuration";
-import { getMemoizedBlueprint3dData } from "../../redux/selectors/blueprint3d";
-import { setdollyInCount } from "../../hoc/mainLayout";
-import { dollyInZoom } from "../../common/utils";
-import { InfoCircleOutlined } from "@ant-design/icons";
+import {updateConfigurationStates} from "../../redux/actions/configuration"
+import {getMemoizedConfigurationData} from "../../redux/selectors/configuration";
+import {getMemoizedBlueprint3dData} from "../../redux/selectors/blueprint3d";
+import {setdollyInCount} from "../../hoc/mainLayout";
+import {dollyInZoom} from "../../common/utils";
+import {InfoCircleOutlined} from "@ant-design/icons";
+import './step6.css'
+import {updateEngineStatesAction} from "../../redux/actions/blueprint3d";
+
 const Step6 = (props) => {
 
   const configuratorData = useSelector(getMemoizedConfigurationData)
@@ -16,7 +19,10 @@ const Step6 = (props) => {
   const {
     roomHeight,
     numberOfhorizontalFrames,
-    totalPrice
+    clientWallWidth,
+    newPanels,
+    newDoor,
+    toggle3dView
   } = configuratorData
 
   const dispatch = useDispatch()
@@ -34,6 +40,7 @@ const Step6 = (props) => {
   const [frameType, setframeType] = useState(selectedFrameType == "Single metal glazing" ? 0 : 1)
   const [frameVariant, setframeVariant] = useState(0)
   const [numbersOfBars, setNumbersOfBars] = useState(numberOfhorizontalFrames)
+  const [panelsWidth, setPanelsWidth] = useState()
 
   useLayoutEffect(() => {
     if (!frames[0].isActivated) {
@@ -88,31 +95,201 @@ const Step6 = (props) => {
     reducerBluePrint?.BP3DData.three.controls.update();
   }
 
+  const getCssCoefficient = () => {
+    return clientWallWidth < 5500 ? 0.21 : 0.14
+  }
+
+  const calcPanelsWidth = () => {
+    setPanelsWidth(newPanels.reduce((sum, item) => sum + item.value, 0))
+  }
+
+  useEffect(() => {
+    calcPanelsWidth()
+  }, []);
+
   useEffect(() => {
     dollyInZoom(reducerBluePrint?.BP3DData)
     blueprint3d[0]?.globals?.getCurrentPrice()
   }, [frameType])
+
+  const open3D = () => {
+    dispatch(updateConfigurationStates(!toggle3dView, 'toggle3dView'))
+  }
+
   return (
     <div className='step4'>
       <div className='dimensions-data data'>
-      <div class="label_container_For_customization custom_centered_aligned">
-        <h3>Frame Design</h3>
-        <Tooltip placement="topRight" title={<span style={{ fontSize: '14px'}}>Please choose the frame style, and colour for your Pātishon.</span>}>
-          <InfoCircleOutlined className="custom_icon" />
-        </Tooltip>
+        <div class="label_container_For_customization custom_centered_aligned title-with-3d-img">
+          <div className='title-with-3d-img__title-wrapper'>
+            <h3>Frame Design</h3>
+            <Tooltip placement="topRight"
+                     title={<span style={{fontSize: '14px'}}>Please choose the frame style, and colour for your Pātishon.</span>}>
+              <InfoCircleOutlined className="custom_icon"/>
+            </Tooltip>
+          </div>
+          <button
+              className='sucess_button img3d'
+              onClick={() => open3D()}
+          >
+            <img src={ThemeImages.color3d} />
+          </button>
+        </div>
+
+        <div className="position-relative step-6">
+          <div
+              className='patishon-container-scroll position-relative'
+              style={{
+                width: panelsWidth * getCssCoefficient() + 10 + 'px',
+                borderColor: frameVariant
+              }}
+          >
+            {
+                frameType === 1 && numbersOfBars === 1 &&
+                <div className="frame single-frame">
+                  <div
+                      className="single-frame__line"
+                      style={{backgroundColor: frameVariant}}
+                  ></div>
+                </div>
+            }
+
+            {
+                frameType === 1 && numbersOfBars === 2 &&
+                <div className="frame double-frame">
+                  <div
+                      className="double-frame__line"
+                      style={{backgroundColor: frameVariant}}
+                  ></div>
+                  <div
+                      className="double-frame__line"
+                      style={{backgroundColor: frameVariant}}
+                  ></div>
+                </div>
+            }
+
+            {
+                frameType === 1 && numbersOfBars === 3 &&
+                <div className="frame triple-frame">
+                  <div
+                      className="triple-frame__line"
+                      style={{backgroundColor: frameVariant}}
+                  ></div>
+                  <div
+                      className="triple-frame__line"
+                      style={{backgroundColor: frameVariant}}
+                  ></div>
+
+                  <div
+                      className="triple-frame__line"
+                      style={{backgroundColor: frameVariant}}
+                  ></div>
+                </div>
+            }
+            {newPanels.map((item, index) => (
+                <div
+                    className='sortable-item-1__item position-relative'
+                    key={item.id}
+                    style={item.name === 'Door' ? {
+                      width: newDoor.doorSize * getCssCoefficient() + 'px',
+                      borderWidth: 5,
+                      zIndex: 100,
+                      borderColor: frameVariant
+                    } : {
+                      width: item.value * getCssCoefficient() + 'px',
+                      borderColor: frameVariant
+                    }}
+                >
+                  {item.name === 'Door' && newDoor.doorType === 'single' && newDoor.handlePosition === 'right' &&
+                      <div className='hinged-door handle-position-right'>
+                        <div className='top-hinge'></div>
+                        <div className='bottom-hinge'></div>
+                      </div>
+                  }
+
+                  {item.name === 'Door' && newDoor.doorType === 'single' && newDoor.handlePosition === 'left' &&
+                      <div className='hinged-door handle-position-left'>
+                        <div className='top-hinge'></div>
+                        <div className='bottom-hinge'></div>
+                      </div>
+                  }
+
+                  {item.name === 'Door' && newDoor.doorType === 'single' && newDoor.handlePosition === 'right' &&
+                      <div className='door-handle-position-left'></div>
+                  }
+
+                  {item.name === 'Door' && newDoor.doorType === 'single' && newDoor.handlePosition === 'left' &&
+                      <div className='door-handle-position-right'></div>
+                  }
+
+                  {item.name === 'Door' && newDoor.doorType === 'double' &&
+                      <div className='double-door'>
+                        <div className="double-door__left-handle"></div>
+                        <div className="double-door__divider"></div>
+                        <div className="double-door__right-handle"></div>
+                      </div>
+                  }
+
+                  {
+                      item.name === 'Door' && newDoor.numbersOfBars === 1 &&
+                      <div className="frame single-frame">
+                        <div
+                            className="single-frame__line"
+                            style={{backgroundColor: frameVariant}}
+                        ></div>
+                      </div>
+                  }
+
+                  {
+                      item.name === 'Door' && newDoor.numbersOfBars === 2 &&
+                      <div className="frame double-frame">
+                        <div
+                            className="double-frame__line"
+                            style={{backgroundColor: frameVariant}}
+                        ></div>
+                        <div
+                            className="double-frame__line"
+                            style={{backgroundColor: frameVariant}}
+                        ></div>
+                      </div>
+                  }
+
+                  {
+                      item.name === 'Door' && newDoor.numbersOfBars === 3 &&
+                      <div className="frame triple-frame">
+                        <div
+                            className="triple-frame__line"
+                            style={{backgroundColor: frameVariant}}
+                        ></div>
+                        <div
+                            className="triple-frame__line"
+                            style={{backgroundColor: frameVariant}}
+                        ></div>
+
+                        <div
+                            className="triple-frame__line"
+                            style={{backgroundColor: frameVariant}}
+                        ></div>
+                      </div>
+                  }
+                </div>
+            ))}
+        </div>
       </div>
+
       </div>
       <div className="panelsizes space-line">
-        <div className={`${frameType === 1 ? 'wrapper_frames' : 'wrapper_frames active'} ${!frames[0]?.isActivated && "block"}`}>
+        <div
+            className={`${frameType === 1 ? 'wrapper_frames' : 'wrapper_frames active'} ${!frames[0]?.isActivated && "block"}`}>
           <img
-            src={ThemeImages.frame}
-            onClick={() => handleFrameTypeChange("single")} />
+              src={ThemeImages.frame}
+              onClick={() => handleFrameTypeChange("single")}/>
           <p>Frameless</p>
         </div>
-        <div className={`${frameType === 0 ? 'wrapper_frames' : 'wrapper_frames active'} ${!frames[1]?.isActivated && "block"}`}>
+        <div
+            className={`${frameType === 0 ? 'wrapper_frames' : 'wrapper_frames active'} ${!frames[1]?.isActivated && "block"}`}>
           <img
-            src={ThemeImages.frames2}
-            onClick={() => handleFrameTypeChange("framed")} />
+              src={ThemeImages.frames2}
+              onClick={() => handleFrameTypeChange("framed")}/>
           <p>Framed</p>
         </div>
       </div>
@@ -121,13 +298,13 @@ const Step6 = (props) => {
           <h3>Number of Horizontal Bars</h3>
           {console.log("this is value incoming = ", numbersOfBars)}
           <Slider
-            className="slider slider_step4"
-            defaultValue={6}
-            tipFormatter={formatter}
-            onChange={handleOnChange}
-            min={1}
-            max={(Math.ceil(roomHeight / 500) - 1)}
-            value={typeof numbersOfBars === "number" ? numbersOfBars : 0}
+              className="slider slider_step4"
+              defaultValue={6}
+              tipFormatter={formatter}
+              onChange={handleOnChange}
+              min={1}
+              max={(Math.ceil(roomHeight / 500) - 1)}
+              value={typeof numbersOfBars === "number" ? numbersOfBars : 0}
           />
           <div className='data_line_one'>
             <label>1</label>
@@ -139,44 +316,20 @@ const Step6 = (props) => {
 
       <h5 className="color_news color_data space-tree">Select Color</h5>
       <div className="small_frames_data">
-        {console.log("this is frame variant = ", typeof frameVariant)}
         {framesVariants.length > 0 && framesVariants.map((item, index) => {
           return (
-            <div className={`first_data ${!framesVariants[0].isActivated && 'first_data_disabled'}`}>
-              {console.log("this is type check = ", frameVariant, item.type)}
-              <div
-                className={`frames-strips ${frameVariant == item.type && "active"}`}
-                style={{ backgroundColor: `${item.type}` }}
+              <div className={`first_data ${!framesVariants[0].isActivated && 'first_data_disabled'}`}>
+                <div
+                    className={`frames-strips ${frameVariant == item.type && "active"}`}
+                    style={{backgroundColor: `${item.type}` }}
                 onClick={() => handleFrameVariantChange(item.type)}
               ></div>
               <p></p>
             </div>
           )
-        })
-
-        }
-        {/* <div className={`first_data ${!framesVariants[0].isActivated && 'first_data_disabled'}`}>
-          <div
-            className={`frames-strips  gray ${frameVariant == "grey" && "active"}`}
-            onClick={() => handleFrameVariantChange("grey")}
-          ></div>
-          <p>Grey</p>
-        </div>
-        <div className={`first_data ${!framesVariants[1].isActivated && 'first_data_disabled'}`}>
-          <div
-            className={`frames-strips  black ${frameVariant == "black" && "active"}`}
-            onClick={() => handleFrameVariantChange("black")}
-          ></div>
-          <p>Black</p>
-        </div>
-        <div className={`first_data ${!framesVariants[2].isActivated && 'first_data_disabled'}`}>
-          <div
-            className={`frames-strips  white ${frameVariant == "white" && "active"}`}
-            onClick={() => handleFrameVariantChange("white")}
-          ></div>
-          <p>White</p>
-        </div> */}
+        })}
       </div>
+
       {/* <p className="previous">Previous Price=£50 + Frame Price =£100</p> */}
       {/* <div className='button step3button'>
         {filmsVariants.length > 0 ? (
@@ -214,11 +367,11 @@ const Step6 = (props) => {
               <button
                 type='submit'
                 onClick={() => {
-                  handleChangeState(undefined, 8)
+                  handleChangeState(undefined, 9)
                 }}
                 className='sucess_button'
               >
-                Preview
+                Next
               </button>
             </>
           )
