@@ -44,6 +44,7 @@ const Step8 = (props) => {
     glassCovering,
     numberOfhorizontalFrames,
     newDoor,
+    skipThirdStep,
     newPanels,
     newImage,
     newImageWidth,
@@ -85,6 +86,7 @@ const Step8 = (props) => {
 
     allData["glassCovering"] = glassCovering;
     allData["newDoor"] = newDoor;
+    allData["skipThirdStep"] = skipThirdStep;
     allData["newPanels"] = newPanels;
     allData["wallLength"] =
       +BP3D.Core.Dimensioning.cmToMeasure(partitionWallLength) ?? 0;

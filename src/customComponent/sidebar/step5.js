@@ -42,12 +42,6 @@ const Step5 = (props) => {
 
   const [addedPanels, setAddedPanels] = useState([]);
 
-  useEffect(() => {
-    if (!skipThirdStep) {
-      setAddedPanels([{ id: 1, name: 'Door', value: newDoor.doorSize }])
-    }
-  }, [skipThirdStep]);
-
   const cloneFunction = (item) => {
     return { ...item, id: new Date().getTime() };
   };
@@ -135,9 +129,16 @@ const Step5 = (props) => {
 
   useEffect(() => {
     handleApply()
-    dispatch(updateConfigurationStates(false, 'skipThirdStep'))
     dispatch(updateConfigurationStates(true, 'stepMoreThan3'))
   }, [])
+
+  useEffect(() => {
+    if (!skipThirdStep) {
+      setAddedPanels([{ id: 1, name: 'Door', value: newDoor.doorSize }])
+    } else {
+      dispatch(updateConfigurationStates([], 'newPanels'))
+    }
+  }, [skipThirdStep]);
 
   const getCssCoefficient = () => {
     return maximumWidth < 5500 ? 0.21 : 0.14

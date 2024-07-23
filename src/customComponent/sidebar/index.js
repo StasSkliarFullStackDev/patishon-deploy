@@ -354,6 +354,7 @@ const Rightsiderbar = (props) => {
               <div
                 class="step-icon"
                 onClick={() => {
+                  dispatch(updateConfigurationStates(false, 'skipThirdStep'))
                   step > 3 && handleChangeState(undefined, 3)
                   blueprint3d[0]?.globals?.getCurrentPrice()
                 }}

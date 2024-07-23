@@ -227,7 +227,6 @@ const Step3Doors = (props) => {
     dispatch(updateEngineStatesAction(doorCategory === 'hinged' ? "1" : "0", "doorChannelTabSelected"))
     dispatch(updateEngineStatesAction(doorSize, "doorSize"))
     handleApply()
-    dispatch(updateConfigurationStates([{ id: 1, name: 'Door', value: doorSize }], 'newPanels'))
   }, [doorSize]);
 
   return (

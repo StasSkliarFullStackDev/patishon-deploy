@@ -121,15 +121,15 @@ function App(props) {
       onOk() {
         console.log('OK');
         dispatch(updateEngineStatesAction(false, "infoPopUp"))
+        dispatch(updateConfigurationStates(false, 'skipThirdStep'))
         // setInfoPopUp(false)
       },
       cancelButtonProps: {
         style: { display: reducerBlueprint?.configurationStep == 3 ? "" : 'none' }
       },
       onCancel() {
-
-        dispatch(updateEngineStatesAction(false, "infoPopUp"))
         dispatch(updateConfigurationStates(true, 'skipThirdStep'))
+        dispatch(updateEngineStatesAction(false, "infoPopUp"))
 
       },
       centered: true
