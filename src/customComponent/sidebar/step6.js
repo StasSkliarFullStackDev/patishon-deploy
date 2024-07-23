@@ -11,6 +11,7 @@ import {dollyInZoom} from "../../common/utils";
 import {InfoCircleOutlined} from "@ant-design/icons";
 import './step6.css'
 import {updateEngineStatesAction} from "../../redux/actions/blueprint3d";
+import html2canvas from "html2canvas";
 
 const Step6 = (props) => {
 
@@ -116,6 +117,17 @@ const Step6 = (props) => {
     dispatch(updateConfigurationStates(!toggle3dView, 'toggle3dView'))
   }
 
+  const nextStep = async () => {
+    const canvas = await html2canvas(document.querySelector("#capture"));
+    const imgData = canvas.toDataURL('image/png');
+    const imgWidth = canvas.width;
+    const imgHeight = canvas.height;
+    dispatch(updateConfigurationStates(imgData, 'newImage'))
+    dispatch(updateConfigurationStates(imgHeight, 'newImageHeight'))
+    dispatch(updateConfigurationStates(imgWidth, 'newImageWidth'))
+    handleChangeState(undefined, 7)
+  }
+
   return (
     <div className='step4'>
       <div className='dimensions-data data'>
@@ -137,6 +149,7 @@ const Step6 = (props) => {
 
         <div className="position-relative step-6">
           <div
+              id="capture"
               className='patishon-container-scroll position-relative'
               style={{
                 width: panelsWidth * getCssCoefficient() + 10 + 'px',
@@ -357,18 +370,14 @@ const Step6 = (props) => {
       </div> */}
       <div className="floating_next_btn">
       {filmsVariants.length > 0 ? (
-           <button type='submit' onClick={() => {
-            handleChangeState(undefined, 7)
-          }} className='sucess_button'>Next</button>
+           <button type='submit'  onClick={() => nextStep()} className='sucess_button'>Next</button>
         ) :
            (
              <>
               <h3 className="panel_price mt-45">Looking great! Preview your finished Pātishon, then you can checkout.</h3>
               <button
                 type='submit'
-                onClick={() => {
-                  handleChangeState(undefined, 9)
-                }}
+                onClick={() => nextStep()}
                 className='sucess_button'
               >
                 Next
