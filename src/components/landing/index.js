@@ -11,7 +11,7 @@ import { updateEngineStatesAction } from "../../redux/actions/blueprint3d"
 import Loading from '../../customComponent/loader'
 import { LOCAL_SERVER } from "../../constant"
 import { DataManager } from '../../common/utils';
-import { getRoomSizeInitiate } from '../../redux/actions/configuration';
+import {getRoomSizeInitiate, updateConfigurationStates} from '../../redux/actions/configuration';
 
 
 const Landing = () => {
@@ -30,6 +30,9 @@ const Landing = () => {
     dispatch(updateEngineStatesAction(false, "infoPopUp"))
     dispatch(getProductsInitiate())
     dispatch(updateEngineStatesAction(false, 'sidebarCollapsed'))
+
+    dispatch(updateConfigurationStates([], 'newPanels'))
+    dispatch(updateConfigurationStates('clear', 'glassCovering'))
   }, [])
 
   return (
