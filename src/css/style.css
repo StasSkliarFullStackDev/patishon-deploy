@@ -1340,7 +1340,7 @@ button.build_on.wall a {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  margin: 48px 4px 0px 3px;
+  margin: 48px 0 0 0px;
   width: 100%;
 }
 
@@ -1407,7 +1407,7 @@ button.build_on {
   border: 9px solid #cbaf87;
 }
 
-/* .step4::-webkit-scrollbar {
+.step4::-webkit-scrollbar {
   width: 10px;
 }
 
@@ -1421,7 +1421,7 @@ button.build_on {
 
 .step4::-webkit-scrollbar-thumb:hover {
   background: #CBAF87;
-} */
+}
 .rightsiderbar {
   padding: 0px 27px 0px 27px;
   z-index: 9999;
