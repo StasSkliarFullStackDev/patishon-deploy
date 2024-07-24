@@ -204,6 +204,60 @@ const Step6 = (props) => {
                   ></div>
                 </div>
             }
+
+            {
+                frameType === 1 && numbersOfBars === 4 &&
+                <div className="four-frame">
+                  <div
+                      className="four-frame__line"
+                      style={{backgroundColor: frameVariant}}
+                  ></div>
+                  <div
+                      className="four-frame__line"
+                      style={{backgroundColor: frameVariant}}
+                  ></div>
+
+                  <div
+                      className="four-frame__line"
+                      style={{backgroundColor: frameVariant}}
+                  ></div>
+
+                  <div
+                      className="four-frame__line"
+                      style={{backgroundColor: frameVariant}}
+                  ></div>
+                </div>
+            }
+
+            {
+                frameType === 1 && numbersOfBars === 5 &&
+                <div className="five-frame">
+                  <div
+                      className="five-frame__line"
+                      style={{backgroundColor: frameVariant}}
+                  ></div>
+
+                  <div
+                      className="five-frame__line"
+                      style={{backgroundColor: frameVariant}}
+                  ></div>
+
+                  <div
+                      className="five-frame__line"
+                      style={{backgroundColor: frameVariant}}
+                  ></div>
+
+                  <div
+                      className="five-frame__line"
+                      style={{backgroundColor: frameVariant}}
+                  ></div>
+
+                  <div
+                      className="five-frame__line"
+                      style={{backgroundColor: frameVariant}}
+                  ></div>
+                </div>
+            }
             {newPanels.map((item, index) => (
                 <div
                     className='sortable-item-1__item position-relative'
@@ -290,10 +344,63 @@ const Step6 = (props) => {
                         ></div>
                       </div>
                   }
+
+                  {
+                      item.name === 'Door' && newDoor.numbersOfBars === 4 &&
+                      <div className="four-frame">
+                        <div
+                            className="four-frame__line"
+                            style={{backgroundColor: frameVariant}}
+                        ></div>
+                        <div
+                            className="four-frame__line"
+                            style={{backgroundColor: frameVariant}}
+                        ></div>
+
+                        <div
+                            className="four-frame__line"
+                            style={{backgroundColor: frameVariant}}
+                        ></div>
+
+                        <div
+                            className="four-frame__line"
+                            style={{backgroundColor: frameVariant}}
+                        ></div>
+                      </div>
+                  }
+
+                  {
+                      item.name === 'Door' && newDoor.numbersOfBars === 5 &&
+                      <div className="five-frame">
+                        <div
+                            className="five-frame__line"
+                            style={{backgroundColor: frameVariant}}
+                        ></div>
+                        <div
+                            className="five-frame__line"
+                            style={{backgroundColor: frameVariant}}
+                        ></div>
+
+                        <div
+                            className="five-frame__line"
+                            style={{backgroundColor: frameVariant}}
+                        ></div>
+
+                        <div
+                            className="five-frame__line"
+                            style={{backgroundColor: frameVariant}}
+                        ></div>
+
+                        <div
+                            className="five-frame__line"
+                            style={{backgroundColor: frameVariant}}
+                        ></div>
+                      </div>
+                  }
                 </div>
             ))}
+          </div>
         </div>
-      </div>
 
       </div>
       <div className="panelsizes space-line">
