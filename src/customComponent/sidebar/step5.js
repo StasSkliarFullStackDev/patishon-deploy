@@ -141,7 +141,13 @@ const Step5 = (props) => {
   }, [skipThirdStep]);
 
   const getCssCoefficient = () => {
-    return maximumWidth < 5500 ? 0.21 : 0.14
+    if (maximumWidth < 5500) {
+      return 0.19
+    } else if (maximumWidth > 5500 && maximumWidth < 8000) {
+      return 0.13
+    } else {
+      return 0.12
+    }
   }
 
   return (
@@ -171,7 +177,9 @@ const Step5 = (props) => {
                     key={item.id}
                     style={{width: item.value * getCssCoefficient() + 'px'}}
                 >
-                  {item.name}
+                  <span style={item.value === 150 ? { writingMode: 'vertical-rl' } : {}}>
+                    {item.name}
+                  </span>
                 </div>
             ))}
           </ReactSortable>
@@ -212,7 +220,9 @@ const Step5 = (props) => {
                           width: item.value * getCssCoefficient() + 'px',
                         }}
                     >
-                      <span>{item.name}</span>
+                      <span style={item.value === 150 ? {writingMode: 'vertical-rl'} : {}}>
+                        {item.name}
+                      </span>
 
                       {item.name !== 'Door'
                           ? <div

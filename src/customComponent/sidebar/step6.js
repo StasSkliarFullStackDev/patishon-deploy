@@ -97,7 +97,13 @@ const Step6 = (props) => {
   }
 
   const getCssCoefficient = () => {
-    return clientWallWidth < 5500 ? 0.21 : 0.14
+    if (clientWallWidth < 5500) {
+      return 0.19
+    } else if (clientWallWidth > 5500 && clientWallWidth < 8000) {
+      return 0.13
+    } else {
+      return 0.12
+    }
   }
 
   const calcPanelsWidth = () => {

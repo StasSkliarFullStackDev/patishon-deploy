@@ -301,6 +301,8 @@ const Rightsiderbar = (props) => {
             } else {
               dispatch(updateEngineStatesAction('2D', 'selectedType'))
             }
+
+            $("#design_2d_tab").click()
           }} className='back_to_2d' style={{ width: '250px !important' }}>Back to normal view</button>
         </div>
       </div>

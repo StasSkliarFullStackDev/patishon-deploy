@@ -4,7 +4,7 @@ import { useNavigate } from "react-router";
 import { toast } from "react-nextjs-toast";
 import ThemeImages from "../../themes/appImage";
 import { getMemoizedConfigurationData } from "../../redux/selectors/configuration";
-import { placeOrderInitiate } from "../../redux/actions/configuration";
+import {placeOrderInitiate, updateConfigurationStates} from "../../redux/actions/configuration";
 import { getMemoizedBlueprint3dData } from "../../redux/selectors/blueprint3d";
 import { BP3D } from "../../common/blueprint3d";
 import { dollyInZoom, isObjEmpty } from "../../common/utils";
@@ -76,6 +76,8 @@ const Step8 = (props) => {
     let data = [];
     const partitionType = localStorage.getItem("partitionType");
     const allData = Object.assign({});
+
+    dispatch(updateConfigurationStates([], 'newPanels'))
 
     const productName =
       partitionType == "fixed"
@@ -299,12 +301,12 @@ const Step8 = (props) => {
           </div>
         </div>
       </div>
-      <div className="floating-text">
-        <p>
-          total<br></br> price
-        </p>
-        <h3>£{totalPrice}</h3>
-      </div>
+      {/*<div className="floating-text">*/}
+      {/*  <p>*/}
+      {/*    total<br></br> price*/}
+      {/*  </p>*/}
+      {/*  <h3>£{totalPrice}</h3>*/}
+      {/*</div>*/}
     </div>
   );
 };
