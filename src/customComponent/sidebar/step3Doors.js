@@ -413,21 +413,21 @@ const Step3Doors = (props) => {
           }}
           className='update-floorplan sucess_button'>Apply</button>
       </div> */}
-        <div className='button top_new'>
-          <button type='submit'
-                  onClick={() => {
-                    handleApply()
-                    let paritionWall = blueprint3d[0].floorplanner.floorplan.walls[4]
-                    let doorStart = {
-                      x: ((paritionWall.start.x + paritionWall.end.x) / 2) - (((blueprint3d[0]?.globals?.getGlobal("selectedDoorConfiguration")?.selectedDoorSize || 0) / perCmEqualToMm) / 2),
-                      y: paritionWall.start.y
-                    }
-                    blueprint3d[0]?.globals?.setGlobal("doorStartVector", doorStart)
-                    handleApply()
-                  }}
-                  className='update-floorplan sucess_button'>Center
-          </button>
-        </div>
+        {/*<div className='button top_new'>*/}
+        {/*  <button type='submit'*/}
+        {/*          onClick={() => {*/}
+        {/*            handleApply()*/}
+        {/*            let paritionWall = blueprint3d[0].floorplanner.floorplan.walls[4]*/}
+        {/*            let doorStart = {*/}
+        {/*              x: ((paritionWall.start.x + paritionWall.end.x) / 2) - (((blueprint3d[0]?.globals?.getGlobal("selectedDoorConfiguration")?.selectedDoorSize || 0) / perCmEqualToMm) / 2),*/}
+        {/*              y: paritionWall.start.y*/}
+        {/*            }*/}
+        {/*            blueprint3d[0]?.globals?.setGlobal("doorStartVector", doorStart)*/}
+        {/*            handleApply()*/}
+        {/*          }}*/}
+        {/*          className='update-floorplan sucess_button'>Center*/}
+        {/*  </button>*/}
+        {/*</div>*/}
         {/* <div className="target-data-button-i">
         <div className='button'>
           <button type='submit' onClick={onSkip} className='sucess_button'>Skip</button>
