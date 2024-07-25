@@ -145,12 +145,12 @@ const Step6 = (props) => {
               <InfoCircleOutlined className="custom_icon"/>
             </Tooltip>
           </div>
-          <button
-              className='sucess_button img3d'
-              onClick={() => open3D()}
-          >
-            <img src={ThemeImages.color3d} />
-          </button>
+          {/*<button*/}
+          {/*    className='sucess_button img3d'*/}
+          {/*    onClick={() => open3D()}*/}
+          {/*>*/}
+          {/*  <img src={ThemeImages.color3d} />*/}
+          {/*</button>*/}
         </div>
 
         <div className="position-relative step-6">
