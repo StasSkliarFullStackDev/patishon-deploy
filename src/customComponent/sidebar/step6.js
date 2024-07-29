@@ -273,25 +273,25 @@ const Step6 = (props) => {
                     }}
                 >
                   {item.name === 'Door' && newDoor.doorType === 'single' && newDoor.handlePosition === 'right' &&
-                      <div className='hinged-door handle-position-right'>
-                        <div className='top-hinge'></div>
-                        <div className='bottom-hinge'></div>
-                      </div>
-                  }
-
-                  {item.name === 'Door' && newDoor.doorType === 'single' && newDoor.handlePosition === 'left' &&
                       <div className='hinged-door handle-position-left'>
                         <div className='top-hinge'></div>
                         <div className='bottom-hinge'></div>
                       </div>
                   }
 
+                  {item.name === 'Door' && newDoor.doorType === 'single' && newDoor.handlePosition === 'left' &&
+                      <div className='hinged-door handle-position-right'>
+                        <div className='top-hinge'></div>
+                        <div className='bottom-hinge'></div>
+                      </div>
+                  }
+
                   {item.name === 'Door' && newDoor.doorType === 'single' && newDoor.handlePosition === 'right' &&
-                      <div className='door-handle-position-left'></div>
+                      <div className='door-handle-position-right'></div>
                   }
 
                   {item.name === 'Door' && newDoor.doorType === 'single' && newDoor.handlePosition === 'left' &&
-                      <div className='door-handle-position-right'></div>
+                      <div className='door-handle-position-left'></div>
                   }
 
                   {item.name === 'Door' && newDoor.doorType === 'double' &&
