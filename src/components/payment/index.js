@@ -24,7 +24,8 @@ const Payment = (props) => {
     const configuratorData = useSelector(getMemoizedConfigurationData)
     const {
         pdfUrl,
-        totalPrice
+        totalPrice,
+        placeOrderLoader
     } = configuratorData
     const reeducerCart = useSelector(getMemoizedCartData)
     const { placeOrder, cartItems } = reeducerCart
@@ -85,15 +86,21 @@ const Payment = (props) => {
                         })}
                     />
                         <br /> </>}
-                    <a
-                        href={LOCAL_SERVER + selectedOrder}
-                        className='pdf-one'
-                        target="_blank"
-                        rel="noreferrer"
-                    >
-                        Download PDF
-                    </a>
-                    <br />
+                    {
+                        placeOrderLoader && <div>Creating a quote PDF...</div>
+                    }
+                    {
+                        !placeOrderLoader &&
+                        <a
+                            href={LOCAL_SERVER + selectedOrder}
+                            className='pdf-one'
+                            target="_blank"
+                            rel="noreferrer"
+                        >
+                            Download PDF
+                        </a>
+                    }
+                    <br/>
                     <button className='pdf-one' onClick={naviagteToHome}>
                         Back to Home
                     </button>
