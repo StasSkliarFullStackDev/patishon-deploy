@@ -27,7 +27,7 @@ const GlassCovering = (props) => {
             >
                 <div className='radio_line'>
                     <div className='radio-item--with-img'>
-                        <span className='radio-item__label'>Clear</span>
+                        <span className='radio-item__label'>None</span>
                         <img src='static/images/etched.png'/>
                     </div>
                     <div className='btn_radio'><Radio defaultChecked value='clear'/></div>
