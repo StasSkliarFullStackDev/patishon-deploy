@@ -15,7 +15,7 @@ const GlassCovering = (props) => {
     }
 
     return (
-        <div className='first-silder glass-covering glass-covering-container'>
+        <div className='step4 first-silder glass-covering glass-covering-container'>
             <div className='label_container_For_customization justify-center'>
                 <h3 className='glass-covering__title'>Glass Covering</h3>
             </div>
@@ -28,7 +28,6 @@ const GlassCovering = (props) => {
                 <div className='radio_line'>
                     <div className='radio-item--with-img'>
                         <span className='radio-item__label'>None</span>
-                        <img src='static/images/etched.png'/>
                     </div>
                     <div className='btn_radio'><Radio defaultChecked value='clear'/></div>
                 </div>
