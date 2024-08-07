@@ -38,7 +38,7 @@
     "build": "react-scripts build --force",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
-    "heroku-postbuild": "npm i -force && npm run build -force"
+    "heroku-postbuild": "npm i --force && npm run build --force"
   },
   "eslintConfig": {
     "extends": [
