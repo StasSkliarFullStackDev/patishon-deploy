@@ -1,7 +1,7 @@
 //Local Server
 // export const LOCAL_SERVER = "http://192.168.3.176:3005/" // Local server
 // export const LOCAL_SERVER = "http://192.168.3.174:3002/" // Local server
-export const LOCAL_SERVER = "https://patishon2-9a953cfa7090.herokuapp.com/" // Dell server
+export const LOCAL_SERVER = "https://api.patishon.com/" // Dell server
 
 // SERVER
 
