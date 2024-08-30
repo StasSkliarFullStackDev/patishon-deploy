@@ -72,23 +72,13 @@ const Step5 = (props) => {
       if (newDoor.doorCategory === "sliding") {
         const { leftDistance, rightDistance } = calcDistanceFromWallToDoor()
 
-        if (newDoor.doorType === "single" && newDoor.directionOfOpening === "left" && leftDistance < newDoor.doorSize) {
-          alert('Not enough space left')
+        if (newDoor.doorSize === 1155 && (leftDistance < 550 || rightDistance < 550)) {
+          alert("Minimum width on the left and right must be greater than or equal to 550mm")
           return
         }
 
-        if (newDoor.doorType === "single" && newDoor.directionOfOpening === "right" && rightDistance < newDoor.doorSize) {
-          alert('Not enough space right')
-          return
-        }
-
-        if (newDoor.doorType === "double" && (rightDistance < newDoor.doorSize / 2)) {
-          alert('Not enough space right')
-          return
-        }
-
-        if (newDoor.doorType === "double" && (leftDistance < newDoor.doorSize / 2)) {
-          alert('Not enough space left')
+        if (newDoor.doorSize === 1630 && (leftDistance < 750 || rightDistance < 750)) {
+          alert("Minimum width on the left and right must be greater than or equal to 750mm")
           return
         }
 
