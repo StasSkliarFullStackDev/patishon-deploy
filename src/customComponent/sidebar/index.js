@@ -105,7 +105,7 @@ const Rightsiderbar = (props) => {
 
   useEffect(() => {
     // console.log("Copper_hinge process")
-    dispatch(updateEngineStatesAction(true, "infoPopUp"))
+    //dispatch(updateEngineStatesAction(true, "infoPopUp"))
     dispatch(getHingesInitiate())
     textureLoader.load('/static/textures/glass/film4.jpeg', (textures) => {
       dispatch(updateEngineStatesAction(textures, ["importedTextures", "film"]))
