@@ -1336,7 +1336,8 @@ button.build_on.wall a {
   height: 139px;
 }
 
-.target-data-button-i {
+.target-data-button-i,
+.target-data-button-i--step-6 {
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -1350,6 +1351,14 @@ button.build_on.wall a {
 
 .target-data-button-i button.sucess_button {
   width: 106px;
+}
+
+.target-data-button-i--step-7 {
+  flex-direction: column;
+}
+
+.target-data-button-i--step-7 button.sucess_button {
+  width: 220px;
 }
 
 .button_lite_ions .button {
@@ -2479,4 +2488,37 @@ h3.glass-covering__title {
 
 .doors-size-radio-list-container {
   flex-direction: column;
+}
+
+.small-loader-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  color: #ffffff;
+  font-size: 14px;
+}
+
+.small-loader-container #loader {
+  width: 48px;
+  height: 48px;
+  border: 5px solid #FFF;
+  border-bottom-color: transparent;
+  border-radius: 50%;
+  display: inline-block;
+  box-sizing: border-box;
+  animation: loaderRotation 1s linear infinite;
+}
+
+@keyframes loaderRotation {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+h3.congratulations-title {
+  font-size: 24px;
 }

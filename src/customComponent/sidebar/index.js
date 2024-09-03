@@ -11,7 +11,6 @@ import Step4 from './step4';
 import Step5 from './step5';
 import Step6 from './step6';
 import Step7 from './step7';
-import Step8 from './step8';
 import StepGlassCovering from './stepGlassCovering';
 import ContentView from './contentview';
 
@@ -270,15 +269,6 @@ const Rightsiderbar = (props) => {
       case 7:
         return (
           <Step7
-            blueprint3d={blueprint3d}
-            step={step}
-            handleChangeState={handleChangeState}
-          />
-        )
-
-      case 8:
-        return (
-          <Step8
             blueprint3d={blueprint3d}
             step={step}
             handleChangeState={handleChangeState}
