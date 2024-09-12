@@ -1,18 +1,33 @@
-import React from 'react'
-import { useSelector, useDispatch } from 'react-redux';
-import { BrowserRouter as Router, Route, Routes, Navigate } from 'react-router-dom';
+import React, {useEffect} from 'react'
+import {BrowserRouter as Router, Route, Routes, Navigate} from 'react-router-dom';
 import MainLayout from '../hoc/mainLayout';
 import Home from '../components/home'
 import Login from '../components/login'
 import RoomPartition from '../components/roomPartition'
 import Landing from '../components/landing'
-import { PublicRoute } from './privateRoute';
 import Payment from '../components/payment';
 import View from '../components/view3D'
-import { getMemoizedBlueprint3dData } from "../redux/selectors/blueprint3d"
 
-const AppRoutes = (props) => {
+const AppRoutes = () => {
+  const getCookie = (name) => {
+    const nameEQ = `${name}=`;
+    const cookiesArray = document.cookie.split(';');
+    for (let i = 0; i < cookiesArray.length; i++) {
+      let cookie = cookiesArray[i].trim();
+      if (cookie.indexOf(nameEQ) === 0) {
+        return cookie.substring(nameEQ.length, cookie.length);
+      }
+    }
+    return null;
+  };
 
+  useEffect(() => {
+    const isAuthenticated = getCookie('isAuthenticated');
+
+    if (!isAuthenticated && window.location.pathname !== '/login') {
+      window.location.href = '/login';
+    }
+  }, []);
 
   return (
     <div style={{ width: "100%", height: "100%" }}>
@@ -26,10 +41,7 @@ const AppRoutes = (props) => {
             }
           />
           <Route path="/login" element={
-            <PublicRoute>
-              <Login />
-            </PublicRoute>
-
+            <Login />
           } />
           <Route path="" element={<MainLayout />}>
             <Route

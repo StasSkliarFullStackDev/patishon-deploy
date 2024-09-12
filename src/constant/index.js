@@ -3,6 +3,8 @@
 // export const LOCAL_SERVER = "http://192.168.3.174:3002/" // Local server
 export const LOCAL_SERVER = "https://api.patishon.com/" // Dell server
 
+export const AUTH_LOGIN = "jago.ker@patishon.com"
+export const AUTH_PASSWORD = "yIz3iRaptK50"
 // SERVER
 
 export const DEFAULT_WALL_MAP = "5f0dde8ee5148d0ef82ff069";
