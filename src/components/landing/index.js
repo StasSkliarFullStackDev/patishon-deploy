@@ -58,7 +58,7 @@ const Landing = () => {
                         <h2>Fixed to one wall</h2>
                         <button
                           type='submit'
-                          className='build_on'
+                          className='build_on wall'
                           onClick={() => {
                             // dispatch(updateEngineStatesAction('top', ["configuration2D", "connectWith"]))
                             dispatch(updateEngineStatesAction(false, 'sidebarCollapsed'))
@@ -106,7 +106,7 @@ const Landing = () => {
                         <h2>Floating</h2>
                         <button
                           type='submit'
-                          className='build_on'
+                          className='build_on wall'
                           onClick={() => {
                             // dispatch(updateEngineStatesAction('float', ["configuration2D", "connectWith"]))
                             dispatch(updateEngineStatesAction(false, 'sidebarCollapsed'))
