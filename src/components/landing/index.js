@@ -12,7 +12,9 @@ import Loading from '../../customComponent/loader'
 import { LOCAL_SERVER } from "../../constant"
 import { DataManager } from '../../common/utils';
 import {getRoomSizeInitiate, updateConfigurationStates} from '../../redux/actions/configuration';
-
+import FixedTwoWalls from '../../images/img22.png'
+import FixedOneWall from '../../images/img2.png'
+import Float from '../../images/img33.png'
 
 const Landing = () => {
 
@@ -48,7 +50,9 @@ const Landing = () => {
                   return (
                     <div className='data_try'>
                       <div className='img_div'>
-                        <img alt='' src={`${LOCAL_SERVER}${item.productImage}`} />
+                        { index === 0 && <img alt='' src={FixedTwoWalls} /> }
+                        { index === 1 && <img alt='' src={FixedOneWall} /> }
+                        { index === 2 && <img alt='' src={Float} /> }
                       </div>
                       <div>
                         <h2>Fixed to one wall</h2>
@@ -72,7 +76,7 @@ const Landing = () => {
                   return (
                     <div className='data_try white_box'>
                       <div className='img_div'>
-                        <img alt='' src={`${LOCAL_SERVER}${item.productImage}`} />
+                        { index === 0 && <img alt='' src={FixedTwoWalls} /> }
                       </div>
                       <div>
                         <h2>Fixed to two walls</h2>
