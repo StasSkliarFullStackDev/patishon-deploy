@@ -24,8 +24,8 @@ const AppRoutes = () => {
   useEffect(() => {
     const isAuthenticated = getCookie('isAuthenticated');
 
-    if (!isAuthenticated && window.location.pathname !== '/login') {
-      window.history.pushState({}, '', '/login');
+    if (!isAuthenticated && window.location.pathname !== '/sign-in') {
+      window.location.href = '/login';
     }
   }, []);
 
@@ -40,7 +40,7 @@ const AppRoutes = () => {
               <Landing />
             }
           />
-          <Route path="/login" element={
+          <Route path="/sign-in" element={
             <Login />
           } />
           <Route path="" element={<MainLayout />}>
