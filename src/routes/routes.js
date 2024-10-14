@@ -1,5 +1,5 @@
 import React, {useEffect} from 'react'
-import {BrowserRouter as Router, Route, Routes, Navigate} from 'react-router-dom';
+import {BrowserRouter as Router, Route, Routes, Navigate, useNavigate} from 'react-router-dom';
 import MainLayout from '../hoc/mainLayout';
 import Home from '../components/home'
 import Login from '../components/login'
@@ -9,6 +9,8 @@ import Payment from '../components/payment';
 import View from '../components/view3D'
 
 const AppRoutes = () => {
+  const navigate = useNavigate();
+
   const getCookie = (name) => {
     const nameEQ = `${name}=`;
     const cookiesArray = document.cookie.split(';');
@@ -21,13 +23,13 @@ const AppRoutes = () => {
     return null;
   };
 
-  // useEffect(() => {
-  //   const isAuthenticated = getCookie('isAuthenticated');
-  //
-  //   if (!isAuthenticated && window.location.pathname !== '/login') {
-  //     window.location.href = '/login';
-  //   }
-  // }, []);
+  useEffect(() => {
+    const isAuthenticated = getCookie('isAuthenticated');
+
+    if (!isAuthenticated && window.location.pathname !== '/login') {
+      navigate('/login');
+    }
+  }, []);
 
   return (
     <div style={{ width: "100%", height: "100%" }}>
