@@ -9,8 +9,6 @@ import Payment from '../components/payment';
 import View from '../components/view3D'
 
 const AppRoutes = () => {
-  const navigate = useNavigate();
-
   const getCookie = (name) => {
     const nameEQ = `${name}=`;
     const cookiesArray = document.cookie.split(';');
