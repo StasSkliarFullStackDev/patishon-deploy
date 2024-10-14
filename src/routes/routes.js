@@ -27,7 +27,7 @@ const AppRoutes = () => {
     const isAuthenticated = getCookie('isAuthenticated');
 
     if (!isAuthenticated && window.location.pathname !== '/login') {
-      navigate('/login');
+      window.history.pushState({}, '', '/login');
     }
   }, []);
 
