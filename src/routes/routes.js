@@ -25,7 +25,7 @@ const AppRoutes = () => {
     const isAuthenticated = getCookie('isAuthenticated');
 
     if (!isAuthenticated && window.location.pathname !== '/sign-in') {
-      window.location.href = '/login';
+      window.location.href = '/sign-in';
     }
   }, []);
 
