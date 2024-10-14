@@ -63,6 +63,7 @@ const AppRoutes = () => {
               element={<Payment />}
             />
           </Route>
+          <Route path="/*" element={<Navigate to="/sign-in" />} />
         </Routes>
       </Router>
     </div>
