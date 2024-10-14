@@ -21,13 +21,13 @@ const AppRoutes = () => {
     return null;
   };
 
-  useEffect(() => {
-    const isAuthenticated = getCookie('isAuthenticated');
-
-    if (!isAuthenticated && window.location.pathname !== '/login') {
-      window.location.href = '/login';
-    }
-  }, []);
+  // useEffect(() => {
+  //   const isAuthenticated = getCookie('isAuthenticated');
+  //
+  //   if (!isAuthenticated && window.location.pathname !== '/login') {
+  //     window.location.href = '/login';
+  //   }
+  // }, []);
 
   return (
     <div style={{ width: "100%", height: "100%" }}>
