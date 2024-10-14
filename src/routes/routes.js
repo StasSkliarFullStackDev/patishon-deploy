@@ -33,6 +33,7 @@ const AppRoutes = () => {
     <div style={{ width: "100%", height: "100%" }}>
       <Router>
         <Routes>
+          <Route path="/sign-in" element={<Login />} />
           <Route path="/" element={<Navigate to="/landing" />} />
           <Route
             path="/landing"
@@ -40,9 +41,6 @@ const AppRoutes = () => {
               <Landing />
             }
           />
-          <Route path="/sign-in" element={
-            <Login />
-          } />
           <Route path="" element={<MainLayout />}>
             <Route
               path="/home"
