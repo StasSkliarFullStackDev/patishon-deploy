@@ -23,7 +23,7 @@ const Login = () => {
             setCookie('isAuthenticated', 'true', 1);
             navigate('/landing');
         } else {
-            setError('Invalid credentials');
+            setError('Invalid credentials')
         }
     }
 
