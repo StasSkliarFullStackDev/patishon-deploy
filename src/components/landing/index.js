@@ -51,8 +51,8 @@ const Landing = () => {
                     <div className='data_try'>
                       <div className='img_div'>
                         { index === 0 && <img alt='' src={FixedTwoWalls} /> }
-                        { index === 1 && <img alt='' src={FixedOneWall} /> }
-                        { index === 2 && <img alt='' src={Float} /> }
+                        { index === 1 && <img alt='' src={Float} /> }
+                        { index === 2 && <img alt='' src={FixedOneWall} /> }
                       </div>
                       <div>
                         <h2>Fixed to one wall</h2>
