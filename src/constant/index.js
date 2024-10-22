@@ -3,7 +3,7 @@
 // export const LOCAL_SERVER = "http://192.168.3.174:3002/" // Local server
 export const LOCAL_SERVER = process.env.REACT_APP_DEV_API_URL || "https://api.patishon.com/"
 
-export const AUTH_LOGIN = "jago.ker@patishon.com"
+export const AUTH_LOGIN = "sales@patishon.com"
 export const AUTH_PASSWORD = "yIz3iRaptK50"
 // SERVER
 
